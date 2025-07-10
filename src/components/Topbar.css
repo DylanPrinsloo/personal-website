@@ -1,0 +1,30 @@
+.topbar {
+  background: #000000;
+  color: #fff;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.topbar-logo {
+  height: 24px;
+  width: 24px;
+}
+
+.topbar-nav {
+  display: flex;
+  gap: 24px;
+}
+
+.topbar-link {
+  color: #bbb;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.topbar-link:hover {
+  color: #fff;
+}
+

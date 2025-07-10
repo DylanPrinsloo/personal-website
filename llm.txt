@@ -1,13 +1,17 @@
-# llm.txt — Guide for LLMs and AI content usage
+# llm.txt — Guide for LLMs, AI bots, and standard web crawlers
 
+# Block all bots (search engines and AI)
 User-agent: *
 Disallow: /
 
+# Block OpenAI's GPTBot
 User-agent: GPTBot
 Disallow: /
 
+# Block Anthropic's ClaudeBot
 User-agent: ClaudeBot
 Disallow: /
+
 
 
 
