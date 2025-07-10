@@ -1,0 +1,43 @@
+/* Inter Font */
+/* Regular weight */
+@font-face {
+  font-family: 'Inter';
+  src: url('./inter/static/Inter_18pt-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Medium weight */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./inter/static/Inter_18pt-Medium.ttf') format('truetype');
+}
+
+/* Semi-Bold weight */
+@font-face {
+  font-family: 'Inter';
+  src: url('./inter/static/Inter_18pt-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* Bold weight */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./inter/static/Inter_18pt-Bold.ttf') format('truetype');
+}
+
+@supports (font-variation-settings: normal) {
+  @font-face {
+    font-family: 'Inter';
+    src: url('./inter/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+  }
+}
