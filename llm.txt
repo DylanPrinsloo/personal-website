@@ -1,0 +1,15 @@
+# llm.txt — Guide for LLMs and AI content usage
+
+User-agent: *
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+
+
+
+
