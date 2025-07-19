@@ -1,32 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import './Topbar.css';
+import './Topbar.scss';
 
 const Topbar = () => {
   return (
     <header className="topbar">
-      {/* Left: Logo */}
       <div>
-        <img
-          src="/apple-touch-icon.png" // Correct path for public assets
-          alt="Logo"
-          className="topbar-logo"
-        />
+        <Link to="/home">
+          <img
+            src="/apple-touch-icon.png"
+            alt="Logo"
+            className="topbar-logo"
+          />
+        </Link>
       </div>
 
-      {/* Center: Nav Links */}
       <nav className="topbar-nav">
         <Link
           to="/agents"
           className="topbar-link"
         >
-          Agents
+          Contact
         </Link>
         <Link
           to="/dashboard"
           className="topbar-link"
         >
-          Dashboard
+          Projects
         </Link>
       </nav>
     </header>

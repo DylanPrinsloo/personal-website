@@ -1,18 +1,18 @@
 import './static/css/_common.scss';
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Topbar from './components/Topbar';
+import Topbar from './components/Topbar/Topbar';
 import Home from './pages/Home';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Topbar />
-        <header className="App-header">
-          <p>Edit <code>src/App.js</code> and save to reload. Learn React</p>
-        </header>
-      </div>
+      <Topbar />
+      <Routes>
+        <Route path="/home" element={<Home />} />
+      </Routes>
+      <Footer />
     </Router>
   );
 }

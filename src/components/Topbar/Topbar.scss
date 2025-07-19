@@ -1,16 +1,22 @@
+@import '../../static/css/_common.scss';
+
 .topbar {
-  background: #000000;
-  color: #fff;
-  padding: 16px 24px;
+  background: $dylan-white;
+  color: $dylan-black;
+  padding: 10px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .topbar-logo {
-  height: 24px;
-  width: 24px;
+  height: 30px;
+  width: 30px;
+  transition: transform 0.5s;
+}
+
+.topbar-logo:hover {
+  transform: rotate(360deg);
 }
 
 .topbar-nav {
@@ -25,6 +31,6 @@
 }
 
 .topbar-link:hover {
-  color: #fff;
+  color: $dylan-black;
 }
 
