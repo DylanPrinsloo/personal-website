@@ -1,4 +1,5 @@
 @import '../../static/css/_common.scss';
+@import '../../static/css/_button.scss';
 
 .topbar {
   background: $dylan-white;
@@ -24,13 +25,4 @@
   gap: 24px;
 }
 
-.topbar-link {
-  color: #bbb;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.topbar-link:hover {
-  color: $dylan-black;
-}
 

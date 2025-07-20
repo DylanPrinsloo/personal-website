@@ -18,13 +18,13 @@ const Topbar = () => {
       <nav className="topbar-nav">
         <Link
           to="/agents"
-          className="topbar-link"
+          className="button-link"
         >
           Contact
         </Link>
         <Link
           to="/dashboard"
-          className="topbar-link"
+          className="button-link"
         >
           Projects
         </Link>

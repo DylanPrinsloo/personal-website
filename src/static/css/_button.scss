@@ -1,0 +1,9 @@
+.button-link {
+  color: #bbb;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.button-link:hover {
+  color: $dylan-black;
+}
