@@ -1,5 +1,5 @@
 import './static/css/_common.scss';
-import './index.css'
+import './index.scss'
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Topbar from './components/Topbar/Topbar';

@@ -1,9 +1,10 @@
 import React from 'react';
+import P5Background from '../components/Animated-background/P5Background';
 
 const Home = () => {
   return (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}>
-      <p style={{ color: "#000000" }}>Hello world</p>
+      <P5Background />
     </div>
   );
 };
