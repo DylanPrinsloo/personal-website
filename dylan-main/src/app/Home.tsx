@@ -168,20 +168,34 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Hero Card (Left Side) - Takes up 2/3 width */}
               <div className="lg:col-span-2 rounded-xl overflow-hidden relative h-[400px] group">
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600 opacity-90"></div>
-                <div className="absolute inset-0 bg-[url('/hackathon-main.jpg')] bg-cover bg-center mix-blend-overlay"></div>
-                <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] group-hover:backdrop-blur-0 transition-all duration-300"></div>
                 
-                <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent">
+                <img 
+                  src="/static/d3d2af3e-403e-43a9-8e5f-f66fe4393b78.png"
+                  alt="Cidak Computer Science Society" 
+                  className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 z-0"
+                />
+                
+                <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] group-hover:backdrop-blur-0 transition-all duration-300 z-20"></div>
+                
+                <a 
+                  href="https://cidak.co" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="absolute inset-0 z-30"
+                >
+                  <span className="sr-only">Visit Cidak.co</span>
+                </a>
+                
+                <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent z-40">
                   <div className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-medium text-white mb-2">
-                    Hackathon Winner
+                    University Society
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-1">AI-Powered Medical Diagnosis</h3>
-                  <p className="text-gray-200">Our smartest, fastest diagnostic tool yet</p>
-                  <div className="mt-3 text-sm text-gray-300">
-                    <span className="inline-block">Techfest 2023</span>
+                  <h3 className="text-2xl font-bold text-white mb-1">Cidak Computer Science Society</h3>
+                  <p className="text-gray-200">Building open-source tools for global challenges</p>
+                  <div className="mt-3 text-sm text-gray-300 flex items-center">
+                    <span className="inline-block">cidak.co</span>
                     <span className="mx-2">•</span>
-                    <span>1st Place</span>
+                    <span>Member</span>
                   </div>
                 </div>
               </div>
@@ -190,31 +204,64 @@ export default function Home() {
               <div className="space-y-6">
                 {/* Top card */}
                 <div className="rounded-xl overflow-hidden relative h-[190px] group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-700 opacity-90"></div>
-                  <div className="absolute inset-0 bg-[url('/project-open.jpg')] bg-cover bg-center mix-blend-overlay"></div>
-                  <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] group-hover:backdrop-blur-0 transition-all duration-300"></div>
+                  {/* Image remains the same */}
+                  <img 
+                    src="/static/01ef61fe-6d2d-4f7e-a972-ae838c19badb.png"
+                    alt="SU Ambient Hackathon Project" 
+                    className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 z-0"
+                  />
                   
-                  <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent">
+                  <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] group-hover:backdrop-blur-0 transition-all duration-300 z-20"></div>
+                  
+                  {/* Add link to GitHub repo */}
+                  <a 
+                    href="https://github.com/DylanPrinsloo/su-ambient-hackathon-25" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="absolute inset-0 z-30"
+                  >
+                    <span className="sr-only">View GitHub Repository</span>
+                  </a>
+                  
+                  <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent z-30">
                     <div className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-medium text-white mb-2">
-                      Open Models
+                      Hackathon
                     </div>
-                    <h3 className="text-xl font-bold text-white">Code Generation Engine</h3>
-                    <div className="mt-1 text-sm text-gray-300">GitHub • 280+ Stars</div>
+                    <h3 className="text-xl font-bold text-white">SU Ambient Hackathon</h3>
+                    <div className="mt-1 text-sm text-gray-300 flex items-center">
+                      <span>Open Source</span>
+                      <span className="mx-2">•</span>
+                      <span>Stellenbosch University</span>
+                    </div>
                   </div>
                 </div>
                 
-                {/* Bottom card */}
+                {/* Bottom card - LeetCode */}
                 <div className="rounded-xl overflow-hidden relative h-[190px] group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-emerald-600 opacity-90"></div>
-                  <div className="absolute inset-0 bg-[url('/project-study.jpg')] bg-cover bg-center mix-blend-overlay"></div>
-                  <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] group-hover:backdrop-blur-0 transition-all duration-300"></div>
+                  <img 
+                    src="/static/6f354b11-51f6-4200-b351-74d0ba16066b.png"
+                    alt="LeetCode Profile" 
+                    className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 z-0"
+                  />
                   
-                  <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent">
+                  <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] group-hover:backdrop-blur-0 transition-all duration-300 z-20"></div>
+                  
+                  {/* Add link to LeetCode profile */}
+                  <a 
+                    href="https://leetcode.com/u/Dylan_atck" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="absolute inset-0 z-30"
+                  >
+                    <span className="sr-only">View LeetCode Profile</span>
+                  </a>
+                  
+                  <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent z-30">
                     <div className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-medium text-white mb-2">
-                      Study
+                      Coding Practice
                     </div>
-                    <h3 className="text-xl font-bold text-white">Smart Learning Platform</h3>
-                    <div className="mt-1 text-sm text-gray-300">Web App • React & Firebase</div>
+                    <h3 className="text-xl font-bold text-white">LeetCode</h3>
+                    <div className="mt-1 text-sm text-gray-300">Algorithm Problems • Competitive Programming</div>
                   </div>
                 </div>
               </div>

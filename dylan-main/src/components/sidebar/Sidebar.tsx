@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import { 
-  ChevronLeft, 
-  ChevronRight, 
+  PanelLeft,
+  PanelRight,
   Home, 
   BookOpen, 
   User, 
@@ -47,6 +47,19 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         />
       )}
 
+      {/* Fixed position collapse/expand button with sidebar icons */}
+      <Button 
+        variant="ghost" 
+        size="sm"
+        className="fixed top-4 left-4 z-40 rounded-full p-2 h-8 w-8 bg-gray-50 dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors shadow-sm"
+        onClick={toggleCollapsed}
+      >
+        {collapsed ? 
+          <PanelRight className="h-4 w-4 stroke-[1.25]" /> : 
+          <PanelLeft className="h-4 w-4 stroke-[1.25]" />
+        }
+      </Button>
+
       {/* Sidebar */}
       <div 
         className={`
@@ -58,29 +71,22 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         style={{ width: collapsed ? '64px' : '256px' }}
       >
         <div className="flex flex-col h-full relative">
-          {/* Collapse toggle button - moved to top */}
-          <div className="p-4 flex justify-end">
-            <Button 
-              variant="ghost" 
-              size="sm"
-              className="rounded-full p-2 h-8 w-8 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              onClick={toggleCollapsed}
-            >
-              {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
-            </Button>
-          </div>
+          {/* Empty space at top for button spacing */}
+          <div className="p-4 h-16"></div>
 
-          {/* Navigation - now in the middle */}
-          <nav className="flex flex-col p-4 space-y-2 flex-1">
+          {/* Navigation - now in the middle with aligned icons */}
+          <nav className="flex flex-col space-y-1 flex-1">
             <Link 
               href="/" 
               className={`
-                flex items-center rounded-md text-sm font-medium transition-all duration-200
-                ${collapsed ? "justify-center px-2 py-3" : "px-4 py-3"}
+                flex items-center text-sm font-medium transition-all duration-200
+                ${collapsed ? "justify-center py-3" : "pl-4 py-3"}
                 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white
               `}
             >
-              <Home className="h-5 w-5 flex-shrink-0" />
+              <div className={collapsed ? "mx-auto" : "ml-4"}>  {/* Changed ml-0 to ml-4 */}
+                <Home className="h-4 w-4 stroke-[1.25]" />
+              </div>
               <span className={`ml-3 transition-opacity duration-200 ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>
                 Home
               </span>
@@ -89,12 +95,14 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
             <Link 
               href="/academics" 
               className={`
-                flex items-center rounded-md text-sm font-medium transition-all duration-200
-                ${collapsed ? "justify-center px-2 py-3" : "px-4 py-3"}
+                flex items-center text-sm font-medium transition-all duration-200
+                ${collapsed ? "justify-center py-3" : "pl-4 py-3"}
                 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300
               `}
             >
-              <BookOpen className="h-5 w-5 flex-shrink-0" />
+              <div className={collapsed ? "mx-auto" : "ml-4"}>  {/* Changed ml-0 to ml-4 */}
+                <BookOpen className="h-4 w-4 stroke-[1.25]" />
+              </div>
               <span className={`ml-3 transition-opacity duration-200 ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>
                 Academics
               </span>
@@ -103,12 +111,14 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
             <Link 
               href="/about" 
               className={`
-                flex items-center rounded-md text-sm font-medium transition-all duration-200
-                ${collapsed ? "justify-center px-2 py-3" : "px-4 py-3"}
+                flex items-center text-sm font-medium transition-all duration-200
+                ${collapsed ? "justify-center py-3" : "pl-4 py-3"}
                 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300
               `}
             >
-              <User className="h-5 w-5 flex-shrink-0" />
+              <div className={collapsed ? "mx-auto" : "ml-4"}>  {/* Changed ml-0 to ml-4 */}
+                <User className="h-4 w-4 stroke-[1.25]" />
+              </div>
               <span className={`ml-3 transition-opacity duration-200 ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>
                 About
               </span>
