@@ -1,156 +1,143 @@
-// "use client";
+"use client";
 
-// import { useState, useEffect } from "react";
-// import Link from "next/link";
-// import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { 
+  ChevronLeft, 
+  ChevronRight, 
+  Home, 
+  BookOpen, 
+  User, 
+  FlaskConical
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-// interface SidebarProps {
-//   isOpen: boolean;
-//   setIsOpen: (isOpen: boolean) => void;
-// }
+interface SidebarProps {
+  sidebarOpen: boolean;
+  setSidebarOpen: (open: boolean) => void;
+}
 
-// export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
-//   // Close sidebar when screen size is small and clicking outside
-//   useEffect(() => {
-//     function handleResize() {
-//       if (window.innerWidth < 768) {
-//         setIsOpen(false);
-//       }
-//     }
+export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
+  const [collapsed, setCollapsed] = useState(false);
 
-//     function handleClickOutside(e: MouseEvent) {
-//       const target = e.target as HTMLElement;
-//       if (window.innerWidth < 768 && isOpen && !target.closest('.sidebar')) {
-//         setIsOpen(false);
-//       }
-//     }
-
-//     window.addEventListener('resize', handleResize);
-//     document.addEventListener('mousedown', handleClickOutside);
+  const toggleCollapsed = () => {
+    const newCollapsedState = !collapsed;
+    setCollapsed(newCollapsedState);
     
-//     return () => {
-//       window.removeEventListener('resize', handleResize);
-//       document.removeEventListener('mousedown', handleClickOutside);
-//     };
-//   }, [isOpen, setIsOpen]);
+    // Store in localStorage for persistence and cross-tab sync
+    localStorage.setItem("sidebar-collapsed", String(newCollapsedState));
+    
+    // Dispatch custom event for same-window components
+    window.dispatchEvent(
+      new CustomEvent("sidebar-toggle", {
+        detail: { collapsed: newCollapsedState }
+      })
+    );
+  };
 
-//   return (
-//     <>
-//       {/* Overlay when sidebar is open on mobile */}
-//       {isOpen && (
-//         <div 
-//           className="md:hidden fixed inset-0 bg-black/30 z-20" 
-//           onClick={() => setIsOpen(false)}
-//         />
-//       )}
-      
-//       {/* Sidebar */}
-//       <div 
-//         className={`sidebar fixed top-0 left-0 h-full bg-[#202123] text-white z-30 transition-transform duration-300 ease-in-out transform ${
-//           isOpen ? "translate-x-0" : "-translate-x-full"
-//         } md:translate-x-0 w-[260px]`}
-//       >
-//         <div className="flex flex-col h-full">
-//           {/* Header with new chat button */}
-//           <div className="p-4">
-//             <button 
-//               className="flex items-center justify-between w-full px-3 py-3 rounded-md border border-white/20 hover:bg-gray-700/50 text-sm"
-//             >
-//               <span className="flex items-center">
-//                 <svg 
-//                   stroke="currentColor" 
-//                   fill="none" 
-//                   strokeWidth="2" 
-//                   viewBox="0 0 24 24" 
-//                   strokeLinecap="round" 
-//                   strokeLinejoin="round" 
-//                   className="h-4 w-4 mr-2" 
-//                   height="1em" 
-//                   width="1em" 
-//                   xmlns="http://www.w3.org/2000/svg"
-//                 >
-//                   <line x1="12" y1="5" x2="12" y2="19"></line>
-//                   <line x1="5" y1="12" x2="19" y2="12"></line>
-//                 </svg>
-//                 New chat
-//               </span>
-//             </button>
-//           </div>
+  return (
+    <>
+      {/* Mobile sidebar backdrop */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/30 z-20 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+          style={{ backdropFilter: 'blur(2px)' }}
+        />
+      )}
 
-//           {/* Navigation links */}
-//           <nav className="flex-1 overflow-y-auto p-2">
-//             <div className="mb-2 px-2 text-xs text-gray-500">Recent pages</div>
-//             <Link href="/" className="flex items-center px-3 py-3 rounded-md hover:bg-gray-700/50 text-sm">
-//               <svg 
-//                 stroke="currentColor" 
-//                 fill="none" 
-//                 strokeWidth="2" 
-//                 viewBox="0 0 24 24" 
-//                 strokeLinecap="round" 
-//                 strokeLinejoin="round" 
-//                 className="h-4 w-4 mr-2" 
-//                 height="1em" 
-//                 width="1em" 
-//                 xmlns="http://www.w3.org/2000/svg"
-//               >
-//                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-//                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
-//               </svg>
-//               Home
-//             </Link>
-//             <Link href="/about" className="flex items-center px-3 py-3 rounded-md hover:bg-gray-700/50 text-sm">
-//               <svg 
-//                 stroke="currentColor" 
-//                 fill="none" 
-//                 strokeWidth="2" 
-//                 viewBox="0 0 24 24" 
-//                 strokeLinecap="round" 
-//                 strokeLinejoin="round" 
-//                 className="h-4 w-4 mr-2" 
-//                 height="1em" 
-//                 width="1em" 
-//                 xmlns="http://www.w3.org/2000/svg"
-//               >
-//                 <circle cx="12" cy="12" r="10"></circle>
-//                 <line x1="12" y1="16" x2="12" y2="12"></line>
-//                 <line x1="12" y1="8" x2="12.01" y2="8"></line>
-//               </svg>
-//               About
-//             </Link>
-//             <Link href="/projects" className="flex items-center px-3 py-3 rounded-md hover:bg-gray-700/50 text-sm">
-//               <svg 
-//                 stroke="currentColor" 
-//                 fill="none" 
-//                 strokeWidth="2" 
-//                 viewBox="0 0 24 24" 
-//                 strokeLinecap="round" 
-//                 strokeLinejoin="round" 
-//                 className="h-4 w-4 mr-2" 
-//                 height="1em" 
-//                 width="1em" 
-//                 xmlns="http://www.w3.org/2000/svg"
-//               >
-//                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-//                 <line x1="3" y1="9" x2="21" y2="9"></line>
-//                 <line x1="9" y1="21" x2="9" y2="9"></line>
-//               </svg>
-//               Projects
-//             </Link>
-//           </nav>
+      {/* Sidebar */}
+      <div 
+        className={`
+          fixed top-0 left-0 h-full z-30 
+          bg-gray-50 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800
+          transition-all duration-300 ease-in-out
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+        `}
+        style={{ width: collapsed ? '64px' : '256px' }}
+      >
+        <div className="flex flex-col h-full relative">
+          {/* Header - with animated transition */}
+          <div className="p-6 border-b border-gray-200 dark:border-gray-800 overflow-hidden whitespace-nowrap">
+            <div className="flex items-center">
+              <span className="text-xl font-bold text-gray-900 dark:text-white transition-all duration-300">
+                {collapsed ? "D" : "Dylan Prinsloo"}
+              </span>
+            </div>
+          </div>
 
-//           {/* User section */}
-//           <div className="border-t border-white/20 p-3">
-//             <div className="flex items-center px-3 py-3 rounded-md hover:bg-gray-700/50 text-sm">
-//               <div className="flex items-center space-x-2">
-//                 <div className="h-8 w-8 rounded-full bg-emerald-700 flex items-center justify-center">
-//                   <span>D</span>
-//                 </div>
-//                 <span>Dylan</span>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
+          {/* Navigation */}
+          <nav className="flex flex-col p-4 space-y-2">
+            <Link 
+              href="/" 
+              className={`
+                flex items-center rounded-md text-sm font-medium transition-all duration-200
+                ${collapsed ? "justify-center px-2 py-3" : "px-4 py-3"}
+                bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white
+              `}
+            >
+              <Home className="h-5 w-5 flex-shrink-0" />
+              <span className={`ml-3 transition-opacity duration-200 ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>
+                Home
+              </span>
+            </Link>
+            
+            <Link 
+              href="/academics" 
+              className={`
+                flex items-center rounded-md text-sm font-medium transition-all duration-200
+                ${collapsed ? "justify-center px-2 py-3" : "px-4 py-3"}
+                hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300
+              `}
+            >
+              <BookOpen className="h-5 w-5 flex-shrink-0" />
+              <span className={`ml-3 transition-opacity duration-200 ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>
+                Academics
+              </span>
+            </Link>
+            
+            <Link 
+              href="/about" 
+              className={`
+                flex items-center rounded-md text-sm font-medium transition-all duration-200
+                ${collapsed ? "justify-center px-2 py-3" : "px-4 py-3"}
+                hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300
+              `}
+            >
+              <User className="h-5 w-5 flex-shrink-0" />
+              <span className={`ml-3 transition-opacity duration-200 ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>
+                About
+              </span>
+            </Link>
+            
+            <Link 
+              href="/research" 
+              className={`
+                flex items-center rounded-md text-sm font-medium transition-all duration-200
+                ${collapsed ? "justify-center px-2 py-3" : "px-4 py-3"}
+                hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300
+              `}
+            >
+              <FlaskConical className="h-5 w-5 flex-shrink-0" />
+              <span className={`ml-3 transition-opacity duration-200 ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>
+                Research
+              </span>
+            </Link>
+          </nav>
+
+          {/* Collapse toggle button */}
+          <div className="absolute bottom-4 right-4">
+            <Button 
+              variant="ghost" 
+              size="sm"
+              className="rounded-full p-2 h-8 w-8 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              onClick={toggleCollapsed}
+            >
+              {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
