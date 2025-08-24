@@ -109,20 +109,6 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
                 About
               </span>
             </Link>
-            
-            <Link 
-              href="/research" 
-              className={`
-                flex items-center rounded-md text-sm font-medium transition-all duration-200
-                ${collapsed ? "justify-center px-2 py-3" : "px-4 py-3"}
-                hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300
-              `}
-            >
-              <FlaskConical className="h-5 w-5 flex-shrink-0" />
-              <span className={`ml-3 transition-opacity duration-200 ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>
-                Research
-              </span>
-            </Link>
           </nav>
 
           {/* Collapse toggle button */}

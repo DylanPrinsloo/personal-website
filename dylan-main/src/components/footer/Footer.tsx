@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Github, Rss, Code, Sun, Moon } from "lucide-react";
+import { Github, Rss, Code, Sun, Moon, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -63,17 +63,22 @@ export default function Footer() {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <div className="flex space-x-6">
+              
               <Link 
-                href="/rss" 
+                href="https://www.linkedin.com/in/dylan-prinsloo-b3480b208" 
                 className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Rss className="h-4 w-4" />
-                <span className="sr-only">RSS</span>
+                <Linkedin className="h-4 w-4" />
+                <span className="sr-only">LinkedIn</span>
               </Link>
               
               <Link 
                 href="https://github.com/dylanprinsloo" 
                 className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Github className="h-4 w-4" />
                 <span className="sr-only">GitHub</span>
@@ -82,6 +87,8 @@ export default function Footer() {
               <Link 
                 href="https://github.com/dylanprinsloo/personal-website" 
                 className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Code className="h-4 w-4" />
                 <span className="sr-only">View Source</span>

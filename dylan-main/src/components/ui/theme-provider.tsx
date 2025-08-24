@@ -9,7 +9,6 @@ export function ThemeProvider({
 }: React.ComponentProps<typeof NextThemesProvider>) {
   return (
     <NextThemesProvider 
-      forcedTheme="light"
       defaultTheme="light"
       enableSystem={false}
       {...props}
