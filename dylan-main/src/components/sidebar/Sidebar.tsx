@@ -11,6 +11,7 @@ import {
   FlaskConical
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -57,17 +58,20 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         style={{ width: collapsed ? '64px' : '256px' }}
       >
         <div className="flex flex-col h-full relative">
-          {/* Header - with animated transition */}
-          <div className="p-6 border-b border-gray-200 dark:border-gray-800 overflow-hidden whitespace-nowrap">
-            <div className="flex items-center">
-              <span className="text-xl font-bold text-gray-900 dark:text-white transition-all duration-300">
-                {collapsed ? "D" : "Dylan Prinsloo"}
-              </span>
-            </div>
+          {/* Collapse toggle button - moved to top */}
+          <div className="p-4 flex justify-end">
+            <Button 
+              variant="ghost" 
+              size="sm"
+              className="rounded-full p-2 h-8 w-8 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              onClick={toggleCollapsed}
+            >
+              {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+            </Button>
           </div>
 
-          {/* Navigation */}
-          <nav className="flex flex-col p-4 space-y-2">
+          {/* Navigation - now in the middle */}
+          <nav className="flex flex-col p-4 space-y-2 flex-1">
             <Link 
               href="/" 
               className={`
@@ -111,16 +115,25 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
             </Link>
           </nav>
 
-          {/* Collapse toggle button */}
-          <div className="absolute bottom-4 right-4">
-            <Button 
-              variant="ghost" 
-              size="sm"
-              className="rounded-full p-2 h-8 w-8 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              onClick={toggleCollapsed}
-            >
-              {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
-            </Button>
+          {/* Header with avatar moved to bottom */}
+          <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-800 overflow-hidden mt-auto">
+            <div className={`flex items-center ${collapsed ? "justify-center" : "space-x-3"}`}>
+              <Avatar className={collapsed ? "size-10" : "size-8"}>
+                <AvatarImage src="/android-chrome-512x512.png" alt="Dylan Prinsloo" />
+                <AvatarFallback>DP</AvatarFallback>
+              </Avatar>
+              
+              {!collapsed && (
+                <div className="overflow-hidden">
+                  <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                    Dylan Prinsloo
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                    Computer Science
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

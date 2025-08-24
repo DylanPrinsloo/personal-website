@@ -80,12 +80,32 @@ export default function Home() {
             </p>
           </section>
 
-          {/* Image 1 would go here */}
-          <div className="mb-24 rounded-xl overflow-hidden relative">
-            {/* Placeholder for large image */}
-            <div className="h-80 w-full bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900 dark:to-indigo-900 flex items-center justify-center">
-              <span className="text-lg text-gray-500 dark:text-gray-400">Image: Computer Vision Project</span>
+          {/* Image 1: Two images side by side */}
+          <div className="mb-24">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 rounded-xl overflow-hidden">
+              {/* First image */}
+              <div className="h-80 overflow-hidden rounded-xl">
+                <img 
+                  src="/static/f1e3048f-7ee2-40eb-b6f1-1b779f4c12ac.png"
+                  alt="Project visualization" 
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              
+              {/* Second image */}
+              <div className="h-80 overflow-hidden rounded-xl">
+                <img 
+                  src="/static/7ac80eee-bfa7-4465-a35e-70bae764811a.png"
+                  alt="Project visualization" 
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
             </div>
+            
+            {/* Privacy caption */}
+            <p className="text-xs italic text-center text-gray-400 dark:text-gray-500 mt-3">
+              I have converted my experiences and events by converting people to Studio Ghibli inspired characters to ensure these people's privacy
+            </p>
           </div>
 
           {/* About Me Section 2: Experience */}
@@ -101,11 +121,14 @@ export default function Home() {
             </p>
           </section>
 
-          {/* Image 2 would go here */}
-          <div className="mb-24 rounded-xl overflow-hidden relative">
-            {/* Placeholder for large image */}
-            <div className="h-80 w-full bg-gradient-to-r from-emerald-100 to-teal-100 dark:from-emerald-900 dark:to-teal-900 flex items-center justify-center">
-              <span className="text-lg text-gray-500 dark:text-gray-400">Image: Hackathon Project</span>
+          {/* Image 2: Project visualization */}
+          <div className="mb-24">
+            <div className="rounded-xl overflow-hidden">
+              <img 
+                src="/static/8f8109d0-c69e-416c-a13d-c13bbed1160b.png"
+                alt="Project visualization" 
+                className="w-full max-h-[500px] object-cover hover:scale-105 transition-transform duration-500 rounded-xl"
+              />
             </div>
           </div>
 
