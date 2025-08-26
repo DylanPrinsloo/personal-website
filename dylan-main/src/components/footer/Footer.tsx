@@ -43,9 +43,9 @@ export default function Footer() {
 
   return (
     <footer 
-      className="relative py-6 px-4 md:px-8"
+      className="relative py-6 px-4 md:px-8 "
       style={{ 
-        borderTop: "none" 
+        borderTop: "none",
       }}
     >
       {/* Full-width border line that extends under the sidebar */}
@@ -54,7 +54,8 @@ export default function Footer() {
         style={{ 
           left: "-100vw",
           width: "200vw", // Full viewport width
-          zIndex: 0 // Ensure sidebar appears above this line
+          zIndex: 0, // Ensure sidebar appears above this line
+          marginTop: "2.5px"
         }}
       />
       
