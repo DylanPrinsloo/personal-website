@@ -59,26 +59,30 @@ export default function Home() {
         </header>
 
         {/* Center the content within the remaining space */}
-        <main className="max-w-4xl mx-auto px-4 py-12 md:px-8 w-full">
-    
+        <main className="max-w-4xl mx-auto px-4 py-10 md:px-8 w-full scale-[0.9] origin-top">
+          {/* Header Section */}
+          <header className="mb-14">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Greetings</h1>
+          </header>
+
           {/* About Me Section 1: Introduction */}
-          <section id="about" className="mb-24">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">About Me</h2>
+          <section id="about" className="mb-20">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-5">About Me</h2>
             
-            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+            <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
               My name is Dylan Prinsloo, and I am currently pursuing a degree in Computer Science at the University of London, with a focus on theoretical computing. Alongside this, I am planning to take a minor in Generative AI and Machine Learning, areas that deeply inspire me.
             </p>
             
-            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+            <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed">
               I have a particular interest in computer vision, especially projects that involve analyzing and transforming video data into meaningful, real-world applications. One example is StadPrin, a startup I co-founded with a team of peers, where we developed a system that converts bodycam footage into completed police reports.
             </p>
           </section>
 
           {/* Image 1: Two images side by side */}
-          <div className="mb-24">
+          <div className="mb-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 rounded-xl overflow-hidden">
               {/* First image */}
-              <div className="h-80 overflow-hidden rounded-xl">
+              <div className="h-72 overflow-hidden rounded-xl">
                 <img 
                   src="/static/f1e3048f-7ee2-40eb-b6f1-1b779f4c12ac.png"
                   alt="Project visualization" 
@@ -87,7 +91,7 @@ export default function Home() {
               </div>
               
               {/* Second image */}
-              <div className="h-80 overflow-hidden rounded-xl">
+              <div className="h-72 overflow-hidden rounded-xl">
                 <img 
                   src="/static/7ac80eee-bfa7-4465-a35e-70bae764811a.png"
                   alt="Project visualization" 
@@ -152,7 +156,7 @@ export default function Home() {
           </section>
 
           {/* Projects Section */}
-          <section id="hackathons" className="mb-16">
+          <section id="hackathons" className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Projects & Hackathons</h2>
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -258,7 +262,7 @@ export default function Home() {
             </div>
             
             {/* Call to action */}
-            <div className="mt-6 flex justify-end">
+            <div className="mt-4 flex justify-end">
               <Link href="/projects" className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center">
                 View all projects
                 <svg className="ml-1 w-4 h-4" viewBox="0 0 20 20" fill="currentColor">

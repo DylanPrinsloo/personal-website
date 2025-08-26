@@ -7,13 +7,23 @@ import {
   Award,
   BookOpen,
   Briefcase,
-  User
+  User,
+  MessageSquare,
+  Calendar // Added Calendar icon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { 
+  Popover, 
+  PopoverContent, 
+  PopoverTrigger 
+} from "@/components/ui/popover";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useTheme } from "next-themes";
+import { BookingDialog } from "@/components/dialog/Dialog";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -22,7 +32,11 @@ interface SidebarProps {
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
-
+  const [showBookingDialog, setShowBookingDialog] = useState(false);
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const [iframeLoading, setIframeLoading] = useState(true);
+  const calUsername = "dylanprinsloo"; // This will create https://cal.com/dylanprinsloo/45min
+  const eventSlug = "45min"; // https://cal.com/dylanprinsloo/45min
   // Initialize from localStorage on mount
   useEffect(() => {
     const savedState = localStorage.getItem("sidebar-collapsed") === "true";
@@ -42,7 +56,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
     );
   };
 
-  // Navigation items array with standardized icon styles
+  // Navigation items array with standardized icon styles - we'll modify the Book Chat item later
   const navItems = [
     { 
       href: "#hackathons", 
@@ -74,7 +88,13 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
     },
   ];
 
-  // Add this function to your Sidebar component
+  // Function to handle booking confirmation
+  const handleBookingConfirm = () => {
+    setPopoverOpen(false);
+    setShowBookingDialog(true);
+  };
+
+  // Function to scroll to sections
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     
@@ -95,9 +115,78 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
     }, 100); // Small delay to allow sidebar to close
   };
 
+  // Book Chat button with popover
+  const renderBookChatItem = () => (
+    <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+      <PopoverTrigger asChild>
+        <button 
+          className={cn(
+            "flex items-center p-2 rounded-md relative w-full text-left",
+            "text-gray-600 dark:text-gray-300",
+            "hover:bg-gray-50 dark:hover:bg-gray-800/50",
+            "hover:text-gray-900 dark:hover:text-white",
+            "transition-all duration-300 ease-in-out",
+            collapsed && "justify-center"
+          )}
+        >
+          <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
+            <Calendar className="h-4 w-4 stroke-[1.25]" />
+          </div>
+          <span 
+            className={cn(
+              "ml-3 text-sm whitespace-nowrap",
+              "transition-all duration-300 ease-in-out",
+              collapsed ? "opacity-0 w-0 overflow-hidden" : "opacity-100 w-auto"
+            )}
+          >
+            Book Chat
+          </span>
+        </button>
+      </PopoverTrigger>
+      <PopoverContent 
+        className="w-64 p-4 border border-gray-200 dark:border-gray-800 shadow-lg" 
+        side={collapsed ? "right" : "bottom"}
+        align={collapsed ? "start" : "center"}
+      >
+        <div className="space-y-4">
+          <div className="flex items-center space-x-2 text-gray-900 dark:text-white">
+            <Calendar className="h-5 w-5" />
+            <h4 className="font-medium">Schedule a Meeting</h4>
+          </div>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Would you like to set up a meeting using my calendar?
+          </p>
+          <div className="flex justify-end space-x-2">
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setPopoverOpen(false)}
+            >
+              Decline
+            </Button>
+            <Button 
+              size="sm"
+              onClick={handleBookingConfirm}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              Confirm
+            </Button>
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+
   // Reusable sidebar navigation content
   const renderNavItems = () => (
     <nav className="flex flex-col space-y-1 px-3 py-4">
+      {/* Book Chat item with popover */}
+      {renderBookChatItem()}
+      
+      {/* Divider */}
+      <div className="h-px bg-gray-200 dark:bg-gray-800 my-2"></div>
+
+      {/* Regular navigation items */}
       {navItems.map((item, index) => (
         <Link 
           key={item.href}
@@ -106,15 +195,15 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
           className={cn(
             "flex items-center p-2 rounded-md relative",
             "text-gray-600 dark:text-gray-300",
-            "hover:bg-gray-100 dark:hover:bg-gray-800",
+            "hover:bg-gray-50 dark:hover:bg-gray-800/50",
             "hover:text-gray-900 dark:hover:text-white",
             "transition-all duration-300 ease-in-out",
-            collapsed && "justify-center",
-            // First item active for demo
-            index === 0 && "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+            collapsed && "justify-center"
           )}
         >
-          {item.icon}
+          <div className="hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-md">
+            {item.icon}
+          </div>
           <span 
             className={cn(
               "ml-3 text-sm whitespace-nowrap",
@@ -128,6 +217,8 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
       ))}
     </nav>
   );
+
+  const { theme } = useTheme();
 
   return (
     <>
@@ -220,6 +311,15 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
           </div>
         </SheetContent>
       </Sheet>
+
+      {/* Cal.com Booking Dialog */}
+      <BookingDialog
+        open={showBookingDialog}
+        onOpenChange={setShowBookingDialog}
+        calUsername={calUsername}
+        eventSlug={eventSlug}
+      />
     </>
   );
 }
+

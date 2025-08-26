@@ -8,7 +8,13 @@ import { useEffect, useState } from "react";
 
 export default function Footer() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  
+  // Add mounted state to prevent hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   
   // Listen for sidebar collapse state via localStorage or custom event
   useEffect(() => {
@@ -52,9 +58,6 @@ export default function Footer() {
       <div 
         className="absolute top-0 left-0 right-0 h-px bg-gray-200 dark:bg-gray-800"
         style={{ 
-          left: "-100vw",
-          width: "200vw", // Full viewport width
-          zIndex: 0, // Ensure sidebar appears above this line
           marginTop: "2.5px"
         }}
       />
@@ -102,10 +105,11 @@ export default function Footer() {
                 onClick={toggleTheme}
                 aria-label="Toggle theme"
               >
-                {theme === "dark" ? (
-                  <Sun className="h-4 w-4" />
+                {/* Only render theme toggle after client-side mount */}
+                {mounted ? (
+                  theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />
                 ) : (
-                  <Moon className="h-4 w-4" />
+                  <div className="h-4 w-4" /> // Empty placeholder with same dimensions
                 )}
               </Button>
             </div>
