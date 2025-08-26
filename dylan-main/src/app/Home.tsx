@@ -60,13 +60,9 @@ export default function Home() {
 
         {/* Center the content within the remaining space */}
         <main className="max-w-4xl mx-auto px-4 py-12 md:px-8 w-full">
-          {/* Header Section */}
-          <header className="mb-16">
-            <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">Greetings</h1>
-          </header>
-
+    
           {/* About Me Section 1: Introduction */}
-          <section className="mb-24">
+          <section id="about" className="mb-24">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">About Me</h2>
             
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
@@ -107,7 +103,7 @@ export default function Home() {
           </div>
 
           {/* About Me Section 2: Experience */}
-          <section className="mb-24">
+          <section id="experience" className="mb-24">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Experience & Projects</h2>
             
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
@@ -144,7 +140,7 @@ export default function Home() {
           </section>
 
           {/* Academics Section*/}
-          <section className="mb-16">
+          <section id="academics" className="mb-16">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Academic Background</h2>
             
             <div className="space-y-6">
@@ -156,7 +152,7 @@ export default function Home() {
           </section>
 
           {/* Projects Section */}
-          <section className="mb-16">
+          <section id="hackathons" className="mb-16">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Projects & Hackathons</h2>
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

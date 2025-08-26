@@ -45,34 +45,55 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   // Navigation items array with standardized icon styles
   const navItems = [
     { 
-      href: "/hackathons", 
+      href: "#hackathons", 
       icon: <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
               <Award className="h-4 w-4 stroke-[1.25]" />
             </div>, 
       label: "Hackathons" 
     },
     { 
-      href: "/academics", 
+      href: "#academics", 
       icon: <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
               <BookOpen className="h-4 w-4 stroke-[1.25]" />
             </div>, 
       label: "Academics" 
     },
     { 
-      href: "/experience", 
+      href: "#experience", 
       icon: <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
               <Briefcase className="h-4 w-4 stroke-[1.25]" />
             </div>, 
       label: "Experience" 
     },
     { 
-      href: "/about", 
+      href: "#about", 
       icon: <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
               <User className="h-4 w-4 stroke-[1.25]" />
             </div>, 
       label: "About Me" 
     },
   ];
+
+  // Add this function to your Sidebar component
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    
+    // Close mobile sidebar first for better UX
+    if (window.innerWidth < 768) {
+      setSidebarOpen(false);
+    }
+
+    // Wait a moment for the sidebar to close before scrolling
+    setTimeout(() => {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }, 100); // Small delay to allow sidebar to close
+  };
 
   // Reusable sidebar navigation content
   const renderNavItems = () => (
@@ -81,6 +102,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         <Link 
           key={item.href}
           href={item.href} 
+          onClick={(e) => scrollToSection(e, item.href)}
           className={cn(
             "flex items-center p-2 rounded-md relative",
             "text-gray-600 dark:text-gray-300",
