@@ -43,11 +43,9 @@ export default function Home() {
 
       {/* Main content - dynamically adjust based on sidebar state */}
       <div 
-        className="flex-1 transition-all duration-300 flex flex-col"
+        className="flex-1 transition-all duration-300 flex flex-col md:ml-[var(--sidebar-width)] md:w-[calc(100%-var(--sidebar-width))]"
         style={{
-          marginLeft: sidebarCollapsed ? '64px' : '256px',
-          width: `calc(100% - ${sidebarCollapsed ? '64px' : '256px'})`,
-          paddingLeft: '0',
+          ['--sidebar-width' as any]: sidebarCollapsed ? '64px' : '256px',
         }}
       >
         {/* Mobile header with menu button */}
@@ -64,7 +62,7 @@ export default function Home() {
         <main className="max-w-4xl mx-auto px-4 py-12 md:px-8 w-full">
           {/* Header Section */}
           <header className="mb-16">
-            <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">My Portfolio</h1>
+            <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">Greetings</h1>
           </header>
 
           {/* About Me Section 1: Introduction */}
@@ -114,10 +112,6 @@ export default function Home() {
             
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
               Beyond startups, I have actively participated in hackathons and other side projects, often exploring creative ways to apply computer science in practice. At university, I have been challenged with a wide range of projects—spanning data visualization, web development, APIs, compiler design, and algorithm analysis—which has helped me develop both theoretical and applied skills.
-            </p>
-            
-            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-              I also have a growing interest in virtual reality and its potential to reshape how we interact with technology. This has led me to explore various immersive technologies and their applications in different domains.
             </p>
           </section>
 

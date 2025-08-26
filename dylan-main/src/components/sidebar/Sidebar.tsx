@@ -1,16 +1,18 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   PanelLeft,
   PanelRight,
-  Home, 
-  BookOpen, 
-  User, 
-  FlaskConical
+  Award,
+  BookOpen,
+  Briefcase,
+  User
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 interface SidebarProps {
@@ -21,14 +23,18 @@ interface SidebarProps {
 export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
 
+  // Initialize from localStorage on mount
+  useEffect(() => {
+    const savedState = localStorage.getItem("sidebar-collapsed") === "true";
+    setCollapsed(savedState);
+  }, []);
+
   const toggleCollapsed = () => {
     const newCollapsedState = !collapsed;
     setCollapsed(newCollapsedState);
-    
-    // Store in localStorage for persistence and cross-tab sync
     localStorage.setItem("sidebar-collapsed", String(newCollapsedState));
     
-    // Dispatch custom event for same-window components
+    // Dispatch event for other components
     window.dispatchEvent(
       new CustomEvent("sidebar-toggle", {
         detail: { collapsed: newCollapsedState }
@@ -36,117 +42,125 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
     );
   };
 
+  // Navigation items array
+  const navItems = [
+    { href: "/hackathons", icon: <Award className="h-4 w-4 stroke-[1.25]" />, label: "Hackathons" },
+    { href: "/academics", icon: <BookOpen className="h-4 w-4 stroke-[1.25]" />, label: "Academics" },
+    { href: "/experience", icon: <Briefcase className="h-4 w-4 stroke-[1.25]" />, label: "Experience" },
+    { href: "/about", icon: <User className="h-4 w-4 stroke-[1.25]" />, label: "About Me" },
+  ];
+
+  // Reusable sidebar navigation content
+  const renderNavItems = () => (
+    <nav className="flex flex-col space-y-1 px-3 py-4">
+      {navItems.map((item, index) => (
+        <Link 
+          key={item.href}
+          href={item.href} 
+          className={cn(
+            "flex items-center p-2 rounded-md",
+            "text-gray-600 dark:text-gray-300",
+            "hover:bg-gray-100 dark:hover:bg-gray-800",
+            "hover:text-gray-900 dark:hover:text-white",
+            "transition-colors",
+            collapsed && "justify-center",
+            // First item active for demo
+            index === 0 && "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+          )}
+        >
+          {item.icon}
+          {!collapsed && <span className="ml-3 text-sm">{item.label}</span>}
+        </Link>
+      ))}
+    </nav>
+  );
+
   return (
     <>
-      {/* Mobile sidebar backdrop */}
-      {sidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black/30 z-20 md:hidden"
-          onClick={() => setSidebarOpen(false)}
-          style={{ backdropFilter: 'blur(2px)' }}
-        />
-      )}
-
-      {/* Fixed position collapse/expand button with sidebar icons */}
-      <Button 
-        variant="ghost" 
-        size="sm"
-        className="fixed top-4 left-4 z-40 rounded-full p-2 h-8 w-8 bg-gray-50 dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors shadow-sm"
-        onClick={toggleCollapsed}
-      >
-        {collapsed ? 
-          <PanelRight className="h-4 w-4 stroke-[1.25]" /> : 
-          <PanelLeft className="h-4 w-4 stroke-[1.25]" />
-        }
-      </Button>
-
-      {/* Sidebar */}
-      <div 
+      {/* Desktop Sidebar */}
+      <div
         className={`
-          fixed top-0 left-0 h-full z-30 
-          bg-gray-50 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800
+          fixed top-0 left-0 h-full z-40 
+          bg-white dark:bg-gray-900 
+          border-r border-gray-200 dark:border-gray-800
           transition-all duration-300 ease-in-out
+          flex flex-col
+          hidden md:flex
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
-        style={{ width: collapsed ? '64px' : '256px' }}
+        style={{ width: collapsed ? '64px' : '240px' }}
       >
-        <div className="flex flex-col h-full relative">
-          {/* Empty space at top for button spacing */}
-          <div className="p-4 h-16"></div>
+        {/* Header with toggle button - desktop only */}
+        <div className="h-16 flex items-center border-b border-gray-200 dark:border-gray-800 px-3">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleCollapsed}
+            className="h-8 w-8 rounded-md"
+          >
+            {collapsed ? 
+              <PanelRight className="h-4 w-4 stroke-[1.25]" /> : 
+              <PanelLeft className="h-4 w-4 stroke-[1.25]" />
+            }
+          </Button>
+        </div>
 
-          {/* Navigation - now in the middle with aligned icons */}
-          <nav className="flex flex-col space-y-1 flex-1">
-            <Link 
-              href="/" 
-              className={`
-                flex items-center text-sm font-medium transition-all duration-200
-                ${collapsed ? "justify-center py-3" : "pl-4 py-3"}
-                bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white
-              `}
-            >
-              <div className={collapsed ? "mx-auto" : "ml-4"}>  {/* Changed ml-0 to ml-4 */}
-                <Home className="h-4 w-4 stroke-[1.25]" />
-              </div>
-              <span className={`ml-3 transition-opacity duration-200 ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>
-                Home
-              </span>
-            </Link>
-            
-            <Link 
-              href="/academics" 
-              className={`
-                flex items-center text-sm font-medium transition-all duration-200
-                ${collapsed ? "justify-center py-3" : "pl-4 py-3"}
-                hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300
-              `}
-            >
-              <div className={collapsed ? "mx-auto" : "ml-4"}>  {/* Changed ml-0 to ml-4 */}
-                <BookOpen className="h-4 w-4 stroke-[1.25]" />
-              </div>
-              <span className={`ml-3 transition-opacity duration-200 ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>
-                Academics
-              </span>
-            </Link>
-            
-            <Link 
-              href="/about" 
-              className={`
-                flex items-center text-sm font-medium transition-all duration-200
-                ${collapsed ? "justify-center py-3" : "pl-4 py-3"}
-                hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300
-              `}
-            >
-              <div className={collapsed ? "mx-auto" : "ml-4"}>  {/* Changed ml-0 to ml-4 */}
-                <User className="h-4 w-4 stroke-[1.25]" />
-              </div>
-              <span className={`ml-3 transition-opacity duration-200 ${collapsed ? "opacity-0 w-0" : "opacity-100"}`}>
-                About
-              </span>
-            </Link>
-          </nav>
+        {/* Navigation items */}
+        <div className="flex-1">
+          {renderNavItems()}
+        </div>
 
-          {/* Header with avatar moved to bottom */}
-          <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-800 overflow-hidden mt-auto">
-            <div className={`flex items-center ${collapsed ? "justify-center" : "space-x-3"}`}>
-              <Avatar className={collapsed ? "size-10" : "size-8"}>
-                <AvatarImage src="/android-chrome-512x512.png" alt="Dylan Prinsloo" />
-                <AvatarFallback>DP</AvatarFallback>
-              </Avatar>
-              
-              {!collapsed && (
-                <div className="overflow-hidden">
-                  <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                    Dylan Prinsloo
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                    Computer Science
-                  </p>
-                </div>
-              )}
-            </div>
+        {/* Footer with avatar */}
+        <div className="mt-auto border-t border-gray-200 dark:border-gray-800 p-3">
+          <div className={cn(
+            "flex items-center p-2 rounded-md",
+            collapsed ? "justify-center" : "space-x-3"
+          )}>
+            <Avatar className="h-8 w-8">
+              <AvatarImage src="/android-chrome-512x512.png" alt="DP" />
+              <AvatarFallback>DP</AvatarFallback>
+            </Avatar>
+            
+            {!collapsed && (
+              <div className="overflow-hidden">
+                <p className="text-sm font-medium text-gray-900 dark:text-white truncate">Dylan Prinsloo</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 truncate">Computer Science</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Mobile Sidebar using Sheet component */}
+      <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+        <SheetContent side="left" className="p-0 w-[240px]">
+          {/* Mobile sidebar content */}
+          <div className="flex flex-col h-full">
+            <div className="h-16 flex items-center border-b border-gray-200 dark:border-gray-800 px-3">
+              <span className="text-sm font-medium">Navigation</span>
+            </div>
+
+            {/* Navigation items - reusing the same component */}
+            <div className="flex-1">
+              {renderNavItems()}
+            </div>
+
+            {/* Footer with avatar */}
+            <div className="mt-auto border-t border-gray-200 dark:border-gray-800 p-3">
+              <div className="flex items-center p-2 rounded-md space-x-3">
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src="/android-chrome-512x512.png" alt="DP" />
+                  <AvatarFallback>DP</AvatarFallback>
+                </Avatar>
+                <div className="overflow-hidden">
+                  <p className="text-sm font-medium text-gray-900 dark:text-white truncate">Dylan Prinsloo</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">Computer Science</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </>
   );
 }
