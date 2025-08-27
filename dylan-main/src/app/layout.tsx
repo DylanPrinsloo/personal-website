@@ -7,7 +7,7 @@ import QueryProvider from "@/api/provider/provider";
 
 export const metadata: Metadata = {
   title: "Dylan Prinsloo",
-  description: "",
+  description: "Computer Science Student at University of London",
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -24,11 +24,7 @@ export const metadata: Metadata = {
   },
 };
 
-const inter = localFont({
-  src: "../components/font/Inter/Inter-VariableFont_opsz,wght.ttf",
-  variable: "--font-inter",
-  display: "swap",
-});
+const inter = localFont({ src: "../components/font/Inter/Inter-VariableFont_opsz,wght.ttf", variable: "--font-inter", display: "swap",});
 
 export default function RootLayout({
   children,
@@ -37,15 +33,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
-      <body className="overflow-x-hidden" suppressHydrationWarning>
+      <body className="overflow-x-hidden">
         <QueryProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-            storageKey="theme-preference"
-          >
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange storageKey="theme-preference">
             {children}
           </ThemeProvider>
         </QueryProvider>

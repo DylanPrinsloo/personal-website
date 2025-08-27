@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu } from "lucide-react";
 import Link from "next/link";
-import Sidebar from "@/components/sidebar/Sidebar";
-import Footer from "@/components/footer/Footer";
+import Footer from "@/components/footer/footer";
+import { Sidebar } from "@/components/sidebar/sidebar"; 
+import { cn } from "@/lib/utils";
 
 export default function Home() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   
   // Listen for sidebar collapse state
@@ -37,33 +36,31 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-white dark:bg-gray-950">
-      {/* Sidebar component */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      {/* Main content - dynamically adjust based on sidebar state */}
-      <div 
-        className="flex-1 transition-all duration-300 flex flex-col md:ml-[var(--sidebar-width)] md:w-[calc(100%-var(--sidebar-width))]"
-        style={{
-          ['--sidebar-width' as any]: sidebarCollapsed ? '64px' : '256px',
-        }}
-      >
-        {/* Mobile header with menu button */}
-        <header className="sticky top-0 z-10 md:hidden bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 p-4">
-          <button 
-            onClick={() => setSidebarOpen(true)}
-            className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
-          >
-            <Menu className="h-6 w-6 text-gray-600 dark:text-gray-300" />
-          </button>
-        </header>
-
-        {/* Center the content within the remaining space */}
+    <div className="flex min-h-screen bg-background">
+      <Sidebar />
+      
+      <div className={cn(
+        "flex-1 flex flex-col",
+        "transition-all duration-300 ease-in-out",
+        "md:ml-[70px]", // Default width when collapsed
+        !sidebarCollapsed && "md:ml-[240px]" // Width when expanded
+      )}>
         <main className="max-w-4xl mx-auto px-4 py-10 md:px-8 w-full scale-[0.9] origin-top">
           {/* Header Section */}
           <header className="mb-14">
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Greetings</h1>
           </header>
+
+          {/* Greetings Section */}
+          <section id="greetings" className="mb-20">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-5">Welcome</h2>
+            
+            <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 border border-gray-100 dark:border-gray-800">
+              <p className="text-base text-gray-500 dark:text-gray-400 italic">
+                Content for the greetings section will be added soon...
+              </p>
+            </div>
+          </section>
 
           {/* About Me Section 1: Introduction */}
           <section id="about" className="mb-20">
