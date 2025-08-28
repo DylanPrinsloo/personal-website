@@ -46,22 +46,6 @@ export default function Home() {
         !sidebarCollapsed && "md:ml-[240px]" // Width when expanded
       )}>
         <main className="max-w-4xl mx-auto px-4 py-10 md:px-8 w-full scale-[0.9] origin-top">
-          {/* Header Section */}
-          <header className="mb-14">
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Greetings</h1>
-          </header>
-
-          {/* Greetings Section */}
-          <section id="greetings" className="mb-20">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-5">Welcome</h2>
-            
-            <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 border border-gray-100 dark:border-gray-800">
-              <p className="text-base text-gray-500 dark:text-gray-400 italic">
-                Content for the greetings section will be added soon...
-              </p>
-            </div>
-          </section>
-
           {/* About Me Section 1: Introduction */}
           <section id="about" className="mb-20">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-5">About Me</h2>
