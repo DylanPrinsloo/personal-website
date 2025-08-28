@@ -34,13 +34,16 @@ function SidebarItem({ href, icon, children, isCollapsed, isActive }: SidebarIte
       href={href}
       className={cn(
         "group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-300 ease-out",
-        "hover:bg-accent hover:text-accent-foreground",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-        isActive && "bg-accent text-accent-foreground",
-        isCollapsed ? "justify-center px-2" : "justify-start"
+        !isCollapsed && "hover:bg-accent hover:text-accent-foreground",
+        !isCollapsed && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        !isCollapsed && isActive && "bg-accent text-accent-foreground",
+        isCollapsed ? "justify-center px-2 pointer-events-none" : "justify-start"
       )}
     >
-      <div className="flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
+      <div className={cn(
+        "flex-shrink-0 transition-transform duration-300",
+        !isCollapsed && "group-hover:scale-110"
+      )}>
         {icon}
       </div>
       
@@ -54,13 +57,6 @@ function SidebarItem({ href, icon, children, isCollapsed, isActive }: SidebarIte
       >
         {children}
       </span>
-      
-      {/* Tooltip for collapsed state */}
-      {isCollapsed && (
-        <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-2 py-1 bg-popover text-popover-foreground text-xs rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
-          {children}
-        </div>
-      )}
     </a>
   );
 }
@@ -109,7 +105,7 @@ export function Sidebar({ className }: SidebarProps) {
       <SheetContent side="left" className="p-0 w-80 bg-card border-border/40">
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between p-6 border-b border-border/40">
-            <h2 className="text-lg font-semibold tracking-tight">Navigation</h2>
+            <h2 className="text-lg font-semibold tracking-tight">Navigate</h2>
           </div>
           
           <div className="flex-1 overflow-auto py-6">
@@ -125,19 +121,6 @@ export function Sidebar({ className }: SidebarProps) {
                 </SidebarItem>
               ))}
             </nav>
-          </div>
-          
-          <div className="border-t border-border/40 p-6">
-            <div className="flex items-center gap-3">
-              <Avatar className="h-10 w-10 border border-border/40">
-                <AvatarImage src="/android-chrome-512x512.png" alt="DP" />
-                <AvatarFallback className="text-xs font-medium">DP</AvatarFallback>
-              </Avatar>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium tracking-tight truncate">Dylan Prinsloo</p>
-                <p className="text-xs text-muted-foreground truncate">Computer Science</p>
-              </div>
-            </div>
           </div>
         </div>
       </SheetContent>
@@ -163,9 +146,9 @@ export function Sidebar({ className }: SidebarProps) {
           onClick={toggleSidebar}
         >
           {isCollapsed ? (
-            <ChevronRight className="h-4 w-4" strokeWidth={1.5} />
+            <ChevronRight className="h-4 w-4" strokeWidth={3} />
           ) : (
-            <ChevronLeft className="h-4 w-4" strokeWidth={1.5} />
+            <ChevronLeft className="h-4 w-4" strokeWidth={3} />
           )}
           <span className="sr-only">
             {isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
