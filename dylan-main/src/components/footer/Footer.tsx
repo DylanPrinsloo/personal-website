@@ -54,14 +54,6 @@ export default function Footer() {
         borderTop: "none",
       }}
     >
-      {/* Full-width border line that extends under the sidebar */}
-      <div 
-        className="absolute top-0 left-0 right-0 h-px bg-gray-200 dark:bg-gray-800"
-        style={{ 
-          marginTop: "2.5px"
-        }}
-      />
-      
       {/* Rest of your footer content */}
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between">
@@ -96,22 +88,7 @@ export default function Footer() {
               >
                 <Code className="h-4 w-4" />
                 <span className="sr-only">View Source</span>
-              </Link>
-              
-              <Button 
-                variant="ghost" 
-                size="icon"
-                className="h-8 w-8 rounded-md p-0 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-                onClick={toggleTheme}
-                aria-label="Toggle theme"
-              >
-                {/* Only render theme toggle after client-side mount */}
-                {mounted ? (
-                  theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />
-                ) : (
-                  <div className="h-4 w-4" /> // Empty placeholder with same dimensions
-                )}
-              </Button>
+              </Link> 
             </div>
           </div>
           <p className="text-sm text-gray-500 dark:text-gray-400">© 2024 MIT Licensed</p>

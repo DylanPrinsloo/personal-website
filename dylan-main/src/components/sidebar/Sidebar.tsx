@@ -4,17 +4,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { 
-  Award, 
-  BookOpen, 
-  Briefcase, 
-  User, 
-  Calendar, 
-  ChevronLeft, 
-  ChevronRight,
-  Menu
-} from "lucide-react";
+import {  ChevronLeft, ChevronRight,Menu } from "lucide-react";
 
 interface SidebarProps {
   className?: string;
@@ -28,7 +18,7 @@ interface SidebarItemProps {
   isActive?: boolean;
 }
 
-function SidebarItem({ href, icon, children, isCollapsed, isActive }: SidebarItemProps) {
+function SidebarItem({ href, children, isCollapsed, isActive }: SidebarItemProps) {
   return (
     <a
       href={href}
@@ -44,7 +34,6 @@ function SidebarItem({ href, icon, children, isCollapsed, isActive }: SidebarIte
         "flex-shrink-0 transition-transform duration-300",
         !isCollapsed && "group-hover:scale-110"
       )}>
-        {icon}
       </div>
       
       <span
@@ -92,11 +81,11 @@ export function Sidebar({ className }: SidebarProps) {
   };
 
   const navigationItems = [
-    { href: "#hackathons", icon: <Award className="h-4 w-4" strokeWidth={1.5} />, label: "Hackathons" },
-    { href: "#academics", icon: <BookOpen className="h-4 w-4" strokeWidth={1.5} />, label: "Academics" },
-    { href: "#experience", icon: <Briefcase className="h-4 w-4" strokeWidth={1.5} />, label: "Experience" },
-    { href: "#about", icon: <User className="h-4 w-4" strokeWidth={1.5} />, label: "About Me" },
-    { href: "#chat", icon: <Calendar className="h-4 w-4" strokeWidth={1.5} />, label: "Book Chat" },
+    { href: "#hackathons",label: "Hackathons" },
+    { href: "#academics", label: "Academics" },
+    { href: "#experience", label: "Experience" },
+    { href: "#about", label: "About Me" },
+    { href: "#chat", label: "Book Chat" },
   ];
 
   // Mobile sidebar
@@ -114,8 +103,8 @@ export function Sidebar({ className }: SidebarProps) {
                 <SidebarItem
                   key={item.href}
                   href={item.href}
-                  icon={item.icon}
                   isActive={activeItem === item.href}
+                  onClick={() => setActiveItem(item.href)}
                 >
                   {item.label}
                 </SidebarItem>
@@ -163,9 +152,9 @@ export function Sidebar({ className }: SidebarProps) {
             <SidebarItem
               key={item.href}
               href={item.href}
-              icon={item.icon}
               isCollapsed={isCollapsed}
               isActive={activeItem === item.href}
+              onClick={() => setActiveItem(item.href)} // <- set active on click
             >
               {item.label}
             </SidebarItem>
@@ -183,7 +172,6 @@ export function Sidebar({ className }: SidebarProps) {
       {/* Mobile toggle button */}
       <Button
         variant="outline"
-        size="icon"
         className="fixed bottom-6 left-6 z-30 md:hidden h-12 w-12 rounded-full shadow-lg border-border/40 bg-background/80 backdrop-blur-sm hover:bg-accent transition-all duration-200"
         onClick={() => setIsMobileOpen(true)}
       >
