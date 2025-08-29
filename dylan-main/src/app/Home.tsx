@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Footer from "@/components/footer/footer";
-import { Sidebar } from "@/components/sidebar/sidebar"; 
+import Footer from "@/components/footer/Footer";
+import { Sidebar } from "@/components/sidebar/Sidebar"; 
 import { cn } from "@/lib/utils";
 
 export default function Home() {
