@@ -4,7 +4,8 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
-import {  ChevronLeft, ChevronRight,Menu } from "lucide-react";
+import { ChevronLeft, ChevronRight, Menu, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 
 interface SidebarProps {
   className?: string;
@@ -12,22 +13,24 @@ interface SidebarProps {
 
 interface SidebarItemProps {
   href: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   children: React.ReactNode;
   isCollapsed?: boolean;
   isActive?: boolean;
+  onClick?: () => void;
 }
 
-function SidebarItem({ href, children, isCollapsed, isActive }: SidebarItemProps) {
+function SidebarItem({ href, children, isCollapsed, isActive, onClick }: SidebarItemProps) {
   return (
     <a
       href={href}
+      onClick={onClick}
       className={cn(
         "group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-300 ease-out",
         !isCollapsed && "hover:bg-accent hover:text-accent-foreground",
         !isCollapsed && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         !isCollapsed && isActive && "bg-accent text-accent-foreground",
-        isCollapsed ? "justify-center px-2 pointer-events-none" : "justify-start"
+        isCollapsed ? "justify-center px-2" : "justify-start"
       )}
     >
       <div className={cn(
@@ -55,6 +58,11 @@ export function Sidebar({ className }: SidebarProps) {
   const [isMobileOpen, setIsMobileOpen] = React.useState(false);
   const [activeItem, setActiveItem] = React.useState("#hackathons");
 
+  // Theme (mounted guard to avoid hydration mismatch)
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+
   // Load collapsed state from localStorage on mount
   React.useEffect(() => {
     const savedState = localStorage.getItem("sidebar-collapsed") === "true";
@@ -80,8 +88,13 @@ export function Sidebar({ className }: SidebarProps) {
     );
   };
 
+  const toggleTheme = () => {
+    if (!mounted) return;
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
+
   const navigationItems = [
-    { href: "#hackathons",label: "Hackathons" },
+    { href: "#hackathons", label: "Hackathons" },
     { href: "#academics", label: "Academics" },
     { href: "#experience", label: "Experience" },
     { href: "#about", label: "About Me" },
@@ -104,7 +117,10 @@ export function Sidebar({ className }: SidebarProps) {
                   key={item.href}
                   href={item.href}
                   isActive={activeItem === item.href}
-                  onClick={() => setActiveItem(item.href)}
+                  onClick={() => {
+                    setActiveItem(item.href);
+                    setIsMobileOpen(false);
+                  }}
                 >
                   {item.label}
                 </SidebarItem>
@@ -126,13 +142,14 @@ export function Sidebar({ className }: SidebarProps) {
         className
       )}
     >
-      {/* Header with toggle button */}
-      <div className="flex items-center justify-start p-4 h-16">
+      {/* Header with collapse + theme toggle — left aligned so icons stay left */}
+      <div className="flex flex-col items-start justify-center p-4 h-20 gap-2">
         <Button
           variant="ghost"
           size="icon"
           className="h-8 w-8 hover:bg-accent transition-colors duration-200"
           onClick={toggleSidebar}
+          aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {isCollapsed ? (
             <ChevronRight className="h-4 w-4" strokeWidth={3} />
@@ -142,6 +159,25 @@ export function Sidebar({ className }: SidebarProps) {
           <span className="sr-only">
             {isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           </span>
+        </Button>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 hover:bg-accent transition-colors duration-200"
+          onClick={toggleTheme}
+          aria-label="Toggle color theme"
+        >
+          {mounted ? (
+            theme === "dark" ? (
+              <Sun className="h-4 w-4" />
+            ) : (
+              <Moon className="h-4 w-4" />
+            )
+          ) : (
+            <span className="h-4 w-4 block opacity-0" />
+          )}
+          <span className="sr-only">Toggle theme</span>
         </Button>
       </div>
 
@@ -154,7 +190,7 @@ export function Sidebar({ className }: SidebarProps) {
               href={item.href}
               isCollapsed={isCollapsed}
               isActive={activeItem === item.href}
-              onClick={() => setActiveItem(item.href)} // <- set active on click
+              onClick={() => setActiveItem(item.href)}
             >
               {item.label}
             </SidebarItem>
