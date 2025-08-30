@@ -181,22 +181,18 @@ export default function Home() {
                 <div className="rounded-xl overflow-hidden relative h-[190px] group">
                   {/* Image remains the same */}
                   <img 
-                    src="/static/01ef61fe-6d2d-4f7e-a972-ae838c19badb.png"
+                    src="/static/01ef61fe-6d2d-4f7e-a972-ae838c19badb.png" 
                     alt="SU Ambient Hackathon Project" 
                     className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 z-0"
                   />
                   
                   <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] group-hover:backdrop-blur-0 transition-all duration-300 z-20"></div>
                   
-                  {/* Add link to GitHub repo */}
-                  <a 
-                    href="https://github.com/DylanPrinsloo/su-ambient-hackathon-25" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="absolute inset-0 z-30"
-                  >
-                    <span className="sr-only">View GitHub Repository</span>
-                  </a>
+                  {/* changed: navigate to internal hackathon page when image clicked */}
+                  <Link 
+                    href="/pages/hackathon" className="absolute inset-0 z-30">
+                    <span className="sr-only">Open Hackathon page</span>
+                  </Link>
                   
                   <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent z-30">
                     <div className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-medium text-white mb-2">
@@ -221,15 +217,11 @@ export default function Home() {
                   
                   <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] group-hover:backdrop-blur-0 transition-all duration-300 z-20"></div>
                   
-                  {/* Add link to LeetCode profile */}
-                  <a 
-                    href="https://leetcode.com/u/Dylan_atck" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="absolute inset-0 z-30"
-                  >
-                    <span className="sr-only">View LeetCode Profile</span>
-                  </a>
+                  {/* changed: navigate to internal problems page when image clicked */}
+                  <Link 
+                    href="/pages/problem" className="absolute inset-0 z-30">
+                    <span className="sr-only">Open Problems page</span>
+                  </Link>
                   
                   <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent z-30">
                     <div className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-medium text-white mb-2">
