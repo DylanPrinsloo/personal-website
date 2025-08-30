@@ -42,10 +42,10 @@ export default function Home() {
       <div className={cn(
         "flex-1 flex flex-col",
         "transition-all duration-300 ease-in-out",
-        "md:ml-[70px]", // Default width when collapsed
-        !sidebarCollapsed && "md:ml-[240px]" // Width when expanded
+        "md:ml-[70px]", 
+        !sidebarCollapsed && "md:ml-[240px]" 
       )}>
-        <main className="max-w-4xl mx-auto px-4 py-10 md:px-8 w-full scale-[0.9] origin-top">
+        <main className="max-w-4xl mx-auto px-4 py-10 md:px-8 w-full">
           {/* About Me Section 1: Introduction */}
           <section id="about" className="mb-20">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-5">About Me</h2>
