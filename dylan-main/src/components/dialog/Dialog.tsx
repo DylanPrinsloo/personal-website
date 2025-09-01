@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 
@@ -17,7 +17,8 @@ export function BookingDialog({
   open,
   onOpenChange,
   calUsername,
-  eventSlug
+  eventSlug,
+  dialogTitle = "Schedule a Meeting with Dylan" 
 }: BookingDialogProps) {
   const [iframeLoading, setIframeLoading] = useState(true);
   const [showDialog, setShowDialog] = useState(false);
@@ -76,6 +77,11 @@ export function BookingDialog({
           showDialog ? "opacity-100" : "opacity-0"
         )}
       >
+        {/* Add accessible DialogTitle that's visually hidden */}
+        <DialogTitle className="sr-only">
+          {dialogTitle}
+        </DialogTitle>
+
         <div className="h-[80vh] relative">
           {/* Loading spinner shown only while loading */}
           {iframeLoading && (
@@ -96,6 +102,7 @@ export function BookingDialog({
               backgroundColor: 'transparent'
             }}
             onLoad={() => setIframeLoading(false)}
+            title={`${dialogTitle} - Cal.com`} // Also add title to iframe for additional accessibility
           />
         </div>
       </DialogContent>

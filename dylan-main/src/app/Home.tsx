@@ -150,18 +150,20 @@ export default function Home() {
                   className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 z-0"
                 />
                 
-                <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] group-hover:backdrop-blur-0 transition-all duration-300 z-20"></div>
+                <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] group-hover:backdrop-blur-0 transition-all duration-300 z-10"></div>
                 
+                {/* External link with proper aria labels */}
                 <a 
                   href="https://cidak.co" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="absolute inset-0 z-30"
+                  className="absolute inset-0 z-30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-xl"
+                  aria-label="Visit Cidak Computer Science Society website"
                 >
                   <span className="sr-only">Visit Cidak.co</span>
                 </a>
                 
-                <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent z-40">
+                <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent z-20 pointer-events-none">
                   <div className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-medium text-white mb-2">
                     University Society
                   </div>
@@ -177,32 +179,32 @@ export default function Home() {
               
               {/* Right Sidebar Cards - Stacked vertically */}
               <div className="space-y-6">
-                {/* Top card */}
+                {/* Top card - Hackathon */}
                 <div className="rounded-xl overflow-hidden relative h-[190px] group">
-                  {/* Image remains the same */}
                   <img 
                     src="/static/01ef61fe-6d2d-4f7e-a972-ae838c19badb.png" 
                     alt="SU Ambient Hackathon Project" 
                     className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 z-0"
                   />
                   
-                  <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] group-hover:backdrop-blur-0 transition-all duration-300 z-20"></div>
+                  <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] group-hover:backdrop-blur-0 transition-all duration-300 z-10"></div>
                   
-                  {/* changed: navigate to internal hackathon page when image clicked */}
+                  {/* Internal link with proper aria labels */}
                   <Link 
-                    href="/pages/hackathon" className="absolute inset-0 z-30">
+                    href="/pages/hackathon" 
+                    className="absolute inset-0 z-30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-xl"
+                    aria-label="Learn more about SU Ambient Hackathon project"
+                  >
                     <span className="sr-only">Open Hackathon page</span>
                   </Link>
                   
-                  <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent z-30">
+                  <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent z-20 pointer-events-none">
                     <div className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-medium text-white mb-2">
                       Hackathon
                     </div>
-                    <h3 className="text-xl font-bold text-white">SU Ambient Hackathon</h3>
+                    <h3 className="text-xl font-bold text-white">First Hackathon</h3>
                     <div className="mt-1 text-sm text-gray-300 flex items-center">
-                      <span>Open Source</span>
-                      <span className="mx-2">•</span>
-                      <span>Stellenbosch University</span>
+                      <span>Hosted in Stellenbosch</span>
                     </div>
                   </div>
                 </div>
@@ -215,20 +217,23 @@ export default function Home() {
                     className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 z-0"
                   />
                   
-                  <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] group-hover:backdrop-blur-0 transition-all duration-300 z-20"></div>
+                  <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] group-hover:backdrop-blur-0 transition-all duration-300 z-10"></div>
                   
-                  {/* changed: navigate to internal problems page when image clicked */}
+                  {/* Internal link with proper aria labels */}
                   <Link 
-                    href="/pages/problem" className="absolute inset-0 z-30">
+                    href="/pages/problem" 
+                    className="absolute inset-0 z-30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-xl"
+                    aria-label="View problem solving and LeetCode projects"
+                  >
                     <span className="sr-only">Open Problems page</span>
                   </Link>
                   
-                  <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent z-30">
+                  <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent z-20 pointer-events-none">
                     <div className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-medium text-white mb-2">
-                      Coding Practice
+                      C++
                     </div>
-                    <h3 className="text-xl font-bold text-white">LeetCode</h3>
-                    <div className="mt-1 text-sm text-gray-300">Algorithm Problems • Competitive Programming</div>
+                    <h3 className="text-xl font-bold text-white">Output, Centric</h3>
+                    <div className="mt-1 text-sm text-gray-300">Competitive Programming</div>
                   </div>
                 </div>
               </div>
