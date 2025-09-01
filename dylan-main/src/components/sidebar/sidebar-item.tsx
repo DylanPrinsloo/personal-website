@@ -3,54 +3,51 @@
 import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { LucideIcon } from "lucide-react";
-import { BookOpen, Award, Briefcase, User, Calendar } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { BookingDialog } from "@/components/dialog/dialog"; 
+import { BookingDialog } from "@/components/dialog/Dialog"; 
 
 interface SidebarItemProps {
   href: string;
-  icon: string;
   children: React.ReactNode;
   isCollapsed?: boolean;
+  isActive?: boolean;
   variant?: "default" | "book-chat";
+  onClick?: () => void;
 }
+
+// Use environment variables for Cal.com credentials
+const calUsername = process.env.NEXT_PUBLIC_CAL_USERNAME;
+const calEventSlug = process.env.NEXT_PUBLIC_CAL_EVENT_SLUG;
 
 export function SidebarItem({ 
   href, 
-  icon, 
   children, 
   isCollapsed = false,
-  variant = "default"
+  isActive = false,
+  variant = "default",
+  onClick
 }: SidebarItemProps) {
   const [showBookingDialog, setShowBookingDialog] = React.useState(false);
   const [popoverOpen, setPopoverOpen] = React.useState(false);
 
-  // Map string icon names to actual components
-  const IconMap: Record<string, LucideIcon> = {
-    "award": Award,
-    "book-open": BookOpen,
-    "briefcase": Briefcase,
-    "user": User,
-    "calendar": Calendar
-  };
-
-  const Icon = IconMap[icon] || User; // Default to User if icon not found
-
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (variant === "default") {
+    const isAnchor = href.startsWith('#') || href.startsWith('/#');
+    
+    // Close mobile sidebar first (if we're on mobile)
+    if (window.innerWidth < 768) {
+      window.dispatchEvent(new CustomEvent("mobile-sidebar-close"));
+    }
+    
+    if (isAnchor) {
       e.preventDefault();
       
-      // Close mobile sidebar first (if we're on mobile)
-      if (window.innerWidth < 768) {
-        // Dispatch event to close sidebar
-        window.dispatchEvent(new CustomEvent("mobile-sidebar-close"));
-      }
-
+      // Extract the selector
+      const selector = href.startsWith('/#') ? href.substring(1) : href;
+      
       // Scroll to section
       setTimeout(() => {
-        const element = document.querySelector(href);
+        const element = document.querySelector(selector);
         if (element) {
           element.scrollIntoView({
             behavior: 'smooth',
@@ -59,6 +56,9 @@ export function SidebarItem({
         }
       }, 100);
     }
+    
+    // Call the onClick handler if provided
+    if (onClick) onClick();
   };
 
   const handleBookingConfirm = () => {
@@ -78,18 +78,16 @@ export function SidebarItem({
                 isCollapsed ? "justify-center" : "justify-start"
               )}
             >
-              <Icon className="h-4 w-4 mr-2" />
               {!isCollapsed && <span>{children}</span>}
             </button>
           </PopoverTrigger>
           <PopoverContent 
-            side={isCollapsed ? "right" : "right"}
-            align={isCollapsed ? "start" : "start"}
+            side={isCollapsed ? "right" : "top"}
+            align={isCollapsed ? "start" : "center"}
             className="w-72"
           >
             <div className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <Calendar className="h-5 w-5" />
+              <div className="flex items-center">
                 <h4 className="font-medium">Schedule a Meeting</h4>
               </div>
               <p className="text-sm text-muted-foreground">
@@ -117,8 +115,8 @@ export function SidebarItem({
         <BookingDialog
           open={showBookingDialog}
           onOpenChange={setShowBookingDialog}
-          calUsername="dylanprinsloo"
-          eventSlug="45min"
+          calUsername={calUsername}
+          eventSlug={calEventSlug}
         />
       </>
     );
@@ -131,10 +129,10 @@ export function SidebarItem({
       className={cn(
         "flex items-center rounded-md px-3 py-2 text-sm font-medium",
         "transition-colors hover:bg-muted",
+        isActive && "bg-muted text-foreground font-medium",
         isCollapsed ? "justify-center" : "justify-start"
       )}
     >
-      <Icon className="h-4 w-4 mr-2" />
       {!isCollapsed && <span>{children}</span>}
     </Link>
   );

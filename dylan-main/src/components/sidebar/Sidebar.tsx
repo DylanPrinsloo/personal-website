@@ -6,51 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { ChevronLeft, ChevronRight, Menu, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
+import { SidebarItem } from "./sidebar-item"; // Import the complete SidebarItem component
 
 interface SidebarProps {
   className?: string;
-}
-
-interface SidebarItemProps {
-  href: string;
-  icon?: React.ReactNode;
-  children: React.ReactNode;
-  isCollapsed?: boolean;
-  isActive?: boolean;
-  onClick?: () => void;
-}
-
-function SidebarItem({ href, children, isCollapsed, isActive, onClick }: SidebarItemProps) {
-  return (
-    <a
-      href={href}
-      onClick={onClick}
-      className={cn(
-        "group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-300 ease-out",
-        !isCollapsed && "hover:bg-accent hover:text-accent-foreground",
-        !isCollapsed && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-        !isCollapsed && isActive && "bg-accent text-accent-foreground",
-        isCollapsed ? "justify-center px-2" : "justify-start"
-      )}
-    >
-      <div className={cn(
-        "flex-shrink-0 transition-transform duration-300",
-        !isCollapsed && "group-hover:scale-110"
-      )}>
-      </div>
-      
-      <span
-        className={cn(
-          "transition-all duration-300 ease-out whitespace-nowrap",
-          isCollapsed 
-            ? "opacity-0 scale-95 translate-x-2 pointer-events-none" 
-            : "opacity-100 scale-100 translate-x-0"
-        )}
-      >
-        {children}
-      </span>
-    </a>
-  );
 }
 
 export function Sidebar({ className }: SidebarProps) {
@@ -62,6 +21,15 @@ export function Sidebar({ className }: SidebarProps) {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => setMounted(true), []);
+
+  // Move navigationItems outside the dependency chain with useMemo
+  const navigationItems = React.useMemo(() => [
+    { href: "/pages/hackathon", label: "Hackathons" },
+    { href: "/#academics", label: "Academics" },
+    { href: "/#experience", label: "Experience" },
+    { href: "/#about", label: "About Me" },
+    { href: "/#chat", label: "Book Chat", variant: "book-chat" }, 
+  ], []); // Empty dependency array = stable reference
 
   // Load collapsed state from localStorage on mount
   React.useEffect(() => {
@@ -93,13 +61,45 @@ export function Sidebar({ className }: SidebarProps) {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
-  const navigationItems = [
-    { href: "#hackathons", label: "Hackathons" },
-    { href: "#academics", label: "Academics" },
-    { href: "#experience", label: "Experience" },
-    { href: "#about", label: "About Me" },
-    { href: "#chat", label: "Book Chat" },
-  ];
+  // Update how we detect the active item to handle both pages and hash links
+  React.useEffect(() => {
+    const updateActiveFromLocation = () => {
+      const pathname = window.location.pathname;
+      const hash = window.location.hash;
+      
+      // Check for exact matches first (full path + hash)
+      const fullPath = pathname + hash;
+      
+      // Find a matching navigation item
+      const matchedItem = navigationItems.find(item => {
+        // Direct match (exact URL)
+        if (item.href === fullPath) return true;
+        
+        // Match just the pathname for page routes (like /hackathon)
+        if (!item.href.includes('#') && item.href === pathname) return true;
+        
+        // If we're on homepage and there's a hash anchor
+        if (pathname === '/' && item.href.startsWith('/#') && item.href === '/' + hash) return true;
+        
+        return false;
+      });
+
+      // Set the active item or default to first item
+      setActiveItem(matchedItem?.href || navigationItems[0].href);
+    };
+
+    // Initialize
+    updateActiveFromLocation();
+
+    // Update on navigation events
+    window.addEventListener("hashchange", updateActiveFromLocation);
+    window.addEventListener("popstate", updateActiveFromLocation);
+
+    return () => {
+      window.removeEventListener("hashchange", updateActiveFromLocation);
+      window.removeEventListener("popstate", updateActiveFromLocation);
+    };
+  }, []); // Remove navigationItems from dependency array since we're using useMemo
 
   // Mobile sidebar
   const mobileSidebar = (
@@ -116,11 +116,8 @@ export function Sidebar({ className }: SidebarProps) {
                 <SidebarItem
                   key={item.href}
                   href={item.href}
-                  isActive={activeItem === item.href}
-                  onClick={() => {
-                    setActiveItem(item.href);
-                    setIsMobileOpen(false);
-                  }}
+                  variant={item.variant as "default" | "book-chat" | undefined}
+                  isCollapsed={false}
                 >
                   {item.label}
                 </SidebarItem>
@@ -188,9 +185,13 @@ export function Sidebar({ className }: SidebarProps) {
             <SidebarItem
               key={item.href}
               href={item.href}
+              variant={item.variant as "default" | "book-chat" | undefined}
               isCollapsed={isCollapsed}
-              isActive={activeItem === item.href}
-              onClick={() => setActiveItem(item.href)}
+              isActive={item.variant !== "book-chat" && activeItem === item.href}
+              onClick={item.variant !== "book-chat" ? () => {
+                setActiveItem(item.href);
+                setIsMobileOpen(false);
+              } : undefined}
             >
               {item.label}
             </SidebarItem>
