@@ -49,8 +49,31 @@ export default function Home() {
           <section id="about" className="mb-16">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Welcome</h2>
             
-            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
               My name is Dylan Prinsloo, and I am currently a second-year Computer Science student at the University of London.
+            </p>
+            
+            {/* Add images below welcome text */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+              <div className="rounded-xl overflow-hidden group">
+                <img 
+                  src="/static/0c82b9b4-f607-4096-91bc-cb1960af5cfb.png" 
+                  alt="Dylan Prinsloo" 
+                  className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="rounded-xl overflow-hidden group">
+                <img 
+                  src="/static/IMG_5141.JPG" 
+                  alt="Dylan Prinsloo" 
+                  className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+            </div>
+
+            {/* Disclaimer */}
+            <p className="text-xs text-gray-500 dark:text-gray-400 italic text-center mb-8">
+              * People have been converted into Studio Ghibli inspired characters to protect their identity
             </p>
           </section>
 
@@ -63,9 +86,6 @@ export default function Home() {
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
               I have laid out the page to accommodate technical and non-technical "humans". The sidebar will help you navigate. All the best.
-            </p>
-            <p className="text-lg text-gray-700 dark:text-gray-900 leading-relaxed mb-4">
-             ~ Dylan
             </p>
           </section>
 

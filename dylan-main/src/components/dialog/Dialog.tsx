@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 
@@ -21,45 +22,40 @@ export function BookingDialog({
   dialogTitle = "Schedule a Meeting with Dylan" 
 }: BookingDialogProps) {
   const [iframeLoading, setIframeLoading] = useState(true);
-  const [showDialog, setShowDialog] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const { theme, resolvedTheme } = useTheme();
-  
-  // Separate loading state for the initial theme detection
-  const [themeReady, setThemeReady] = useState(false);
-  
-  // When open changes, manage loading states
+
+  // Simulate loading progress for better UX
   useEffect(() => {
     if (open) {
-      // Reset loading state when dialog opens
       setIframeLoading(true);
+      setLoadingProgress(0);
       
-      // Give time for theme to be properly detected
-      const themeTimer = setTimeout(() => {
-        setThemeReady(true);
-      }, 300);
-      
-      return () => clearTimeout(themeTimer);
-    } else {
-      // Reset states when dialog closes
-      setShowDialog(false);
-      setThemeReady(false);
+      // Immediate progress simulation
+      const progressTimer = setInterval(() => {
+        setLoadingProgress(prev => {
+          if (prev >= 90) {
+            clearInterval(progressTimer);
+            return prev;
+          }
+          return prev + Math.random() * 15;
+        });
+      }, 150);
+
+      return () => clearInterval(progressTimer);
     }
   }, [open]);
-  
-  // Only show dialog when iframe is loaded and theme is ready
-  useEffect(() => {
-    if (open && !iframeLoading && themeReady) {
-      // Add a small delay for smoother transition
-      const showTimer = setTimeout(() => {
-        setShowDialog(true);
-      }, 200);
-      
-      return () => clearTimeout(showTimer);
-    }
-  }, [open, iframeLoading, themeReady]);
 
   // Actual theme to use (with fallback)
   const calTheme = theme === 'dark' || resolvedTheme === 'dark' ? 'dark' : 'light';
+
+  const handleIframeLoad = () => {
+    setLoadingProgress(100);
+    // Small delay to show 100% before hiding
+    setTimeout(() => {
+      setIframeLoading(false);
+    }, 300);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -72,9 +68,8 @@ export function BookingDialog({
           "bg-transparent backdrop-blur-xl",
           "border-none shadow-none",
           "p-0",
-          // Transition effects
-          "transition-opacity duration-300",
-          showDialog ? "opacity-100" : "opacity-0"
+          // Always visible - no opacity transitions
+          "transition-transform duration-300"
         )}
       >
         {/* Add accessible DialogTitle that's visually hidden */}
@@ -83,15 +78,64 @@ export function BookingDialog({
         </DialogTitle>
 
         <div className="h-[80vh] relative">
-          {/* Loading spinner shown only while loading */}
+          {/* Enhanced Loading overlay with Skeleton */}
           {iframeLoading && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-transparent gap-3">
-              <div className="animate-spin rounded-full h-10 w-10 border-2 border-muted border-t-primary"></div>
-              <p className="text-sm text-muted-foreground">Loading calendar...</p>
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/95 backdrop-blur-sm gap-6 z-10 rounded-xl p-8">
+              
+              {/* Calendar skeleton mockup */}
+              <div className="w-full max-w-md space-y-4">
+                {/* Header skeleton */}
+                <div className="space-y-2">
+                  <Skeleton className="h-8 w-3/4 mx-auto" />
+                  <Skeleton className="h-4 w-1/2 mx-auto" />
+                </div>
+                
+                {/* Calendar grid skeleton */}
+                <div className="grid grid-cols-7 gap-2">
+                  {Array.from({ length: 21 }).map((_, i) => (
+                    <Skeleton key={i} className="h-8 w-8" />
+                  ))}
+                </div>
+                
+                {/* Time slots skeleton */}
+                <div className="space-y-2 mt-6">
+                  <Skeleton className="h-6 w-24" />
+                  <div className="grid grid-cols-3 gap-2">
+                    {Array.from({ length: 6 }).map((_, i) => (
+                      <Skeleton key={i} className="h-10 w-full" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Progress information */}
+              <div className="text-center space-y-3 mt-8">
+                <p className="text-sm font-medium text-foreground">Loading calendar...</p>
+                
+                {/* Progress bar */}
+                <div className="w-64 bg-muted rounded-full h-2 overflow-hidden">
+                  <div 
+                    className="h-full bg-primary transition-all duration-300 ease-out rounded-full"
+                    style={{ width: `${Math.min(loadingProgress, 100)}%` }}
+                  />
+                </div>
+                
+                {/* Progress percentage */}
+                <p className="text-xs text-muted-foreground">
+                  {Math.round(loadingProgress)}% complete
+                </p>
+                
+                {/* Helpful tip */}
+                {loadingProgress > 50 && (
+                  <p className="text-xs text-muted-foreground animate-pulse">
+                    Setting up your booking experience...
+                  </p>
+                )}
+              </div>
             </div>
           )}
           
-          {/* Cal.com iframe - always render but it's hidden by parent opacity */}
+          {/* Cal.com iframe */}
           <iframe
             src={`https://cal.com/${calUsername}/${eventSlug}?embed=true&theme=${calTheme}&hideBranding=true`}
             width="100%"
@@ -101,8 +145,8 @@ export function BookingDialog({
               borderRadius: '12px',
               backgroundColor: 'transparent'
             }}
-            onLoad={() => setIframeLoading(false)}
-            title={`${dialogTitle} - Cal.com`} // Also add title to iframe for additional accessibility
+            onLoad={handleIframeLoad}
+            title={`${dialogTitle} - Cal.com`}
           />
         </div>
       </DialogContent>

@@ -10,7 +10,6 @@ interface SidebarItemProps {
   href: string;
   children: React.ReactNode;
   isCollapsed?: boolean;
-  isActive?: boolean;
   variant?: "default" | "book-chat";
   onClick?: () => void;
 }
@@ -23,7 +22,6 @@ export function SidebarItem({
   href, 
   children, 
   isCollapsed = false,
-  isActive = false,
   variant = "default",
   onClick
 }: SidebarItemProps) {
@@ -66,7 +64,7 @@ export function SidebarItem({
           onClick={() => setShowBookingDialog(true)}
           className={cn(
             "flex items-center w-full rounded-md px-3 py-2 text-sm font-medium",
-            "transition-colors hover:bg-muted",
+            "transition-colors duration-200 hover:bg-muted",
             isCollapsed ? "justify-center" : "justify-start"
           )}
         >
@@ -89,8 +87,7 @@ export function SidebarItem({
       onClick={handleClick}
       className={cn(
         "flex items-center rounded-md px-3 py-2 text-sm font-medium",
-        "transition-colors hover:bg-muted",
-        isActive && "bg-muted text-foreground font-medium",
+        "transition-colors duration-200 hover:bg-muted",
         isCollapsed ? "justify-center" : "justify-start"
       )}
     >

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { ChevronLeft, ChevronRight, Menu, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { SidebarItem } from "./sidebar-item"; // Import the complete SidebarItem component
+import { SidebarItem } from "./sidebar-item";
 
 interface SidebarProps {
   className?: string;
@@ -15,21 +15,18 @@ interface SidebarProps {
 export function Sidebar({ className }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = React.useState(false);
   const [isMobileOpen, setIsMobileOpen] = React.useState(false);
-  const [activeItem, setActiveItem] = React.useState("#hackathons");
 
   // Theme (mounted guard to avoid hydration mismatch)
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => setMounted(true), []);
 
-  // Move navigationItems outside the dependency chain with useMemo
   const navigationItems = React.useMemo(() => [
-    { href: "/pages/hackathon", label: "Hackathons" },
+    { href: "/#hackathons", label: "Hackathons" },
     { href: "/#academics", label: "Academics" },
-    { href: "/#experience", label: "Experience" },
     { href: "/#about", label: "About Me" },
     { href: "/#chat", label: "Book Chat", variant: "book-chat" }, 
-  ], []); // Empty dependency array = stable reference
+  ], []); 
 
   // Load collapsed state from localStorage on mount
   React.useEffect(() => {
@@ -61,46 +58,6 @@ export function Sidebar({ className }: SidebarProps) {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
-  // Update how we detect the active item to handle both pages and hash links
-  React.useEffect(() => {
-    const updateActiveFromLocation = () => {
-      const pathname = window.location.pathname;
-      const hash = window.location.hash;
-      
-      // Check for exact matches first (full path + hash)
-      const fullPath = pathname + hash;
-      
-      // Find a matching navigation item
-      const matchedItem = navigationItems.find(item => {
-        // Direct match (exact URL)
-        if (item.href === fullPath) return true;
-        
-        // Match just the pathname for page routes (like /hackathon)
-        if (!item.href.includes('#') && item.href === pathname) return true;
-        
-        // If we're on homepage and there's a hash anchor
-        if (pathname === '/' && item.href.startsWith('/#') && item.href === '/' + hash) return true;
-        
-        return false;
-      });
-
-      // Set the active item or default to first item
-      setActiveItem(matchedItem?.href || navigationItems[0].href);
-    };
-
-    // Initialize
-    updateActiveFromLocation();
-
-    // Update on navigation events
-    window.addEventListener("hashchange", updateActiveFromLocation);
-    window.addEventListener("popstate", updateActiveFromLocation);
-
-    return () => {
-      window.removeEventListener("hashchange", updateActiveFromLocation);
-      window.removeEventListener("popstate", updateActiveFromLocation);
-    };
-  }, []); // Remove navigationItems from dependency array since we're using useMemo
-
   // Mobile sidebar
   const mobileSidebar = (
     <Sheet open={isMobileOpen} onOpenChange={setIsMobileOpen}>
@@ -118,6 +75,7 @@ export function Sidebar({ className }: SidebarProps) {
                   href={item.href}
                   variant={item.variant as "default" | "book-chat" | undefined}
                   isCollapsed={false}
+                  onClick={() => setIsMobileOpen(false)}
                 >
                   {item.label}
                 </SidebarItem>
@@ -139,7 +97,7 @@ export function Sidebar({ className }: SidebarProps) {
         className
       )}
     >
-      {/* Header with collapse + theme toggle — left aligned so icons stay left */}
+      {/* Header with collapse + theme toggle */}
       <div className="flex flex-col items-start justify-center p-4 h-20 gap-2">
         <Button
           variant="ghost"
@@ -187,11 +145,6 @@ export function Sidebar({ className }: SidebarProps) {
               href={item.href}
               variant={item.variant as "default" | "book-chat" | undefined}
               isCollapsed={isCollapsed}
-              isActive={item.variant !== "book-chat" && activeItem === item.href}
-              onClick={item.variant !== "book-chat" ? () => {
-                setActiveItem(item.href);
-                setIsMobileOpen(false);
-              } : undefined}
             >
               {item.label}
             </SidebarItem>
