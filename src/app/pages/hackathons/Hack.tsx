@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 export default function Hack() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10 md:px-8 w-full pb-32">
+    <>
       <section id="hackathons-intro" className="mb-16">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Hackathons</h2>
         
@@ -15,7 +15,6 @@ export default function Hack() {
         <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
           So I helped get a group of people together and we are now beginning to work on some amazing life-changing projects. Below, you can see for yourself.
         </p>
-      
       </section>
 
       <section id="links" className="mb-16">
@@ -76,6 +75,6 @@ export default function Hack() {
           </Link>
         </p>
       </section>
-    </div>
+    </>
   );
 }

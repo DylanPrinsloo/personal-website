@@ -14,7 +14,6 @@ export function PageBreadcrumb() {
   const pathname = usePathname();
 
   const getBreadcrumbs = () => {
-    // Only remove basePath in production
     const cleanPath =
       process.env.NODE_ENV === "production"
         ? pathname.replace("/personal-website", "")
@@ -41,7 +40,6 @@ export function PageBreadcrumb() {
         ];
 
       default:
-        // For unknown routes, still show home breadcrumb
         return [{ label: "Home", href: "/" }];
     }
   };

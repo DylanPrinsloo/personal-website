@@ -7,7 +7,7 @@ import Footer from "@/components/footer/Footer";
 export default function AcademicsPage() {
   return (
     <div className="min-h-screen bg-background text-foreground relative">
-      <main className="container mx-auto px-4 py-8 pb-32">
+      <main className="max-w-4xl mx-auto px-4 py-10 md:px-8 w-full pb-32">
         <Aca />
       </main>
 
