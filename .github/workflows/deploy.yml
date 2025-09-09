@@ -27,11 +27,6 @@ jobs:
           node-version: '18'
           cache: 'npm'
           
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-        with:
-          static_site_generator: next
-          
       - name: Install dependencies
         run: npm ci
         
@@ -41,10 +36,17 @@ jobs:
           NEXT_PUBLIC_CAL_EVENT_SLUG: ${{ secrets.NEXT_PUBLIC_CAL_EVENT_SLUG }}
         run: npm run build
         
-      - name: Upload artifact
+      - name: Verify build output
+        run: |
+          echo "Checking build output..."
+          ls -la
+          echo "Contents of out directory:"
+          ls -la out/
+          
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: out
 
   deploy:
     environment:
