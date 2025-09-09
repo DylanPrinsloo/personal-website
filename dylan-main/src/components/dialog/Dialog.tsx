@@ -69,18 +69,20 @@ export function BookingDialog({
           "border-none shadow-none",
           "p-0",
           // Always visible - no opacity transitions
-          "transition-transform duration-300"
+          "transition-transform duration-300",
+          // JetBrains Mono font
+          "font-mono"
         )}
       >
         {/* Add accessible DialogTitle that's visually hidden */}
-        <DialogTitle className="sr-only">
+        <DialogTitle className="sr-only font-mono">
           {dialogTitle}
         </DialogTitle>
 
-        <div className="h-[80vh] relative">
+        <div className="h-[80vh] relative font-mono">
           {/* Enhanced Loading overlay with Skeleton */}
           {iframeLoading && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/95 backdrop-blur-sm gap-6 z-10 rounded-xl p-8">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/95 backdrop-blur-sm gap-6 z-10 rounded-xl p-8 font-mono">
               
               {/* Calendar skeleton mockup */}
               <div className="w-full max-w-md space-y-4">
@@ -109,8 +111,8 @@ export function BookingDialog({
               </div>
               
               {/* Progress information */}
-              <div className="text-center space-y-3 mt-8">
-                <p className="text-sm font-medium text-foreground">Loading calendar...</p>
+              <div className="text-center space-y-3 mt-8 font-mono">
+                <p className="text-sm font-medium text-foreground font-mono">Loading calendar...</p>
                 
                 {/* Progress bar */}
                 <div className="w-64 bg-muted rounded-full h-2 overflow-hidden">
@@ -121,13 +123,13 @@ export function BookingDialog({
                 </div>
                 
                 {/* Progress percentage */}
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-muted-foreground font-mono">
                   {Math.round(loadingProgress)}% complete
                 </p>
                 
                 {/* Helpful tip */}
                 {loadingProgress > 50 && (
-                  <p className="text-xs text-muted-foreground animate-pulse">
+                  <p className="text-xs text-muted-foreground animate-pulse font-mono">
                     Setting up your booking experience...
                   </p>
                 )}
@@ -143,7 +145,8 @@ export function BookingDialog({
             frameBorder="0"
             style={{ 
               borderRadius: '12px',
-              backgroundColor: 'transparent'
+              backgroundColor: 'transparent',
+              fontFamily: "'JetBrains Mono', 'Courier New', monospace"
             }}
             onLoad={handleIframeLoad}
             title={`${dialogTitle} - Cal.com`}
