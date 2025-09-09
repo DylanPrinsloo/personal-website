@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import QueryProvider from "@/api/provider/provider"; 
 
@@ -24,18 +23,21 @@ export const metadata: Metadata = {
   },
 };
 
-const inter = localFont({ src: "../components/font/Inter/Inter-VariableFont_opsz,wght.ttf", variable: "--font-inter", display: "swap",});
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <body className="overflow-x-hidden">
+    <html lang="en" suppressHydrationWarning>
+      <body className="font-mono">
         <QueryProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange storageKey="theme-preference">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
             {children}
           </ThemeProvider>
         </QueryProvider>
