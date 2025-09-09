@@ -98,7 +98,7 @@ export default function Footer() {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link 
-                    href="/static/_Dylan_s_Résumé_2025.pdf" 
+                    href="/_Dylan_s_Résumé_2025.pdf" 
                     className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"

@@ -17,15 +17,18 @@ export function PageBreadcrumb() {
   const getBreadcrumbs = () => {
     switch (pathname) {
       case "/":
-        return null; // No breadcrumb on home page
+      case "":
+        return null; 
 
       case "/pages/academics":
+      case "/pages/academics/": 
         return [
           { label: "Home", href: "/" },
           { label: "Academics", isCurrentPage: true },
         ];
 
       case "/pages/hackathons":
+      case "/pages/hackathons/": 
         return [
           { label: "Home", href: "/" },
           { label: "Academics", href: "/pages/academics" },

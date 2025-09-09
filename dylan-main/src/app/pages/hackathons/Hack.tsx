@@ -4,17 +4,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Hack() {
-  const [asciiFrame, setAsciiFrame] = useState(0);
-  const asciiChars = ['.', ':', '`', '#', '@', 'C'];
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAsciiFrame(prev => (prev + 1) % asciiChars.length);
-    }, 200); // Change character every 200ms
-    
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <>
       <section id="hackathons-intro" className="mb-16">
