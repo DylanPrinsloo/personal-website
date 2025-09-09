@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Github, Rss, Code, Sun, Moon, Linkedin, Calendar } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Github, Code, Sun, Moon, Linkedin, Calendar } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { BookingDialog } from "@/components/dialog/Dialog";
@@ -10,7 +9,6 @@ import { BookingDialog } from "@/components/dialog/Dialog";
 export default function Footer() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const calUsername = process.env.NEXT_PUBLIC_CAL_USERNAME;
   const eventSlug = process.env.NEXT_PUBLIC_CAL_EVENT_SLUG;
@@ -18,33 +16,6 @@ export default function Footer() {
   // Add mounted state to prevent hydration mismatch
   useEffect(() => {
     setMounted(true);
-  }, []);
-  
-  // Listen for sidebar collapse state via localStorage or custom event
-  useEffect(() => {
-    // Check initial state
-    const storedState = localStorage.getItem("sidebar-collapsed");
-    setIsSidebarCollapsed(storedState === "true");
-    
-    // Listen for changes
-    const handleStorageChange = () => {
-      const currentState = localStorage.getItem("sidebar-collapsed");
-      setIsSidebarCollapsed(currentState === "true");
-    };
-    
-    window.addEventListener("storage", handleStorageChange);
-    
-    // Custom event listener for same-window changes
-    const handleSidebarToggle = (e) => {
-      setIsSidebarCollapsed(e.detail.collapsed);
-    };
-    
-    window.addEventListener("sidebar-toggle", handleSidebarToggle);
-    
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-      window.removeEventListener("sidebar-toggle", handleSidebarToggle);
-    };
   }, []);
   
   const toggleTheme = () => {
