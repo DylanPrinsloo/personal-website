@@ -13,9 +13,10 @@ import { usePathname } from "next/navigation";
 export function PageBreadcrumb() {
   const pathname = usePathname();
 
-  // Simple breadcrumb logic based on pathname only
   const getBreadcrumbs = () => {
-    switch (pathname) {
+    const cleanPath = pathname.replace('/personal-website', '');
+    
+    switch (cleanPath) {
       case "/":
       case "":
         return null; 

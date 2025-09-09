@@ -3,6 +3,7 @@
 import Footer from "@/components/footer/Footer";
 import { PageBreadcrumb } from "@/components/breadcrumb/PageBreadcrumb";
 import Link from "next/link";
+import Image from "next/image"; 
 
 export default function Home() {
   return (
@@ -16,13 +17,16 @@ export default function Home() {
               My name is Dylan Prinsloo, and I am currently a second-year Computer Science student at the University of London.
             </p>
             
-            {/* Add images below welcome text */}
+            {/* Fix the image */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
               <div className="overflow-hidden group">
-                <img 
+                <Image 
                   src="/self-portrait.JPG" 
                   alt="Dylan Prinsloo" 
+                  width={400}
+                  height={300}
                   className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+                  priority
                 />
               </div>
             </div>
