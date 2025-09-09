@@ -1,10 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { Github, Code, Sun, Moon, Linkedin, Calendar } from "lucide-react";
+import { Github, Code, Sun, Moon, Linkedin, Calendar, FileDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { BookingDialog } from "@/components/dialog/Dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Footer() {
   const { theme, setTheme } = useTheme();
@@ -35,64 +41,119 @@ export default function Footer() {
         }}
       >
         <div className="flex items-center justify-center w-full">
-          <div className="flex space-x-6">
-            
-            <Link 
-              href="https://www.linkedin.com/in/dylan-prinsloo-b3480b208" 
-              className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Linkedin className="h-4 w-4" />
-              <span className="sr-only">LinkedIn</span>
-            </Link>
-            
-            <Link 
-              href="https://github.com/dylanprinsloo" 
-              className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Github className="h-4 w-4" />
-              <span className="sr-only">GitHub</span>
-            </Link>
-            
-            <Link 
-              href="https://github.com/dylanprinsloo/personal-website" 
-              className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Code className="h-4 w-4" />
-              <span className="sr-only">View Source</span>
-            </Link>
+          <TooltipProvider>
+            <div className="flex space-x-6">
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link 
+                    href="https://www.linkedin.com/in/dylan-prinsloo-b3480b208" 
+                    className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                    <span className="sr-only">LinkedIn</span>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent className="font-mono">
+                  <p>Visit my LinkedIn</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link 
+                    href="https://github.com/dylanprinsloo" 
+                    className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Github className="h-4 w-4" />
+                    <span className="sr-only">GitHub</span>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent className="font-mono">
+                  <p>View my GitHub</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link 
+                    href="https://github.com/dylanprinsloo/personal-website" 
+                    className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Code className="h-4 w-4" />
+                    <span className="sr-only">View Source</span>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent className="font-mono">
+                  <p>View website source code</p>
+                </TooltipContent>
+              </Tooltip>
 
-            <button
-              onClick={handleBookingClick}
-              className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-              aria-label="Book a chat"
-            >
-              <Calendar className="h-4 w-4" />
-              <span className="sr-only">Book a chat</span>
-            </button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link 
+                    href="/static/_Dylan_s_Résumé_2025.pdf" 
+                    className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                  >
+                    <FileDown className="h-4 w-4" />
+                    <span className="sr-only">Download Resume</span>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent className="font-mono">
+                  <p>Download my résumé</p>
+                </TooltipContent>
+              </Tooltip>
 
-            <button
-              onClick={toggleTheme}
-              className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-              aria-label="Toggle theme"
-            >
-              {mounted ? (
-                theme === "dark" ? (
-                  <Sun className="h-4 w-4" />
-                ) : (
-                  <Moon className="h-4 w-4" />
-                )
-              ) : (
-                <span className="h-4 w-4 block opacity-0" />
-              )}
-              <span className="sr-only">Toggle theme</span>
-            </button>
-          </div>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={handleBookingClick}
+                    className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                    aria-label="Book a chat"
+                  >
+                    <Calendar className="h-4 w-4" />
+                    <span className="sr-only">Book a chat</span>
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent className="font-mono">
+                  <p>Book a chat with me</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={toggleTheme}
+                    className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                    aria-label="Toggle theme"
+                  >
+                    {mounted ? (
+                      theme === "dark" ? (
+                        <Sun className="h-4 w-4" />
+                      ) : (
+                        <Moon className="h-4 w-4" />
+                      )
+                    ) : (
+                      <span className="h-4 w-4 block opacity-0" />
+                    )}
+                    <span className="sr-only">Toggle theme</span>
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent className="font-mono">
+                  <p>Toggle {theme === "dark" ? "light" : "dark"} theme</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </TooltipProvider>
         </div>
       </footer>
 

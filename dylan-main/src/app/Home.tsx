@@ -31,11 +31,13 @@ export default function Home() {
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">About me</h2>
             
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-              Born and raised by humans. It's pretty mind blowing to take the opportunity to create not only a webpage, but a sort of biography on myself. 
-              So I'm taking this opportunity to show you around this webpage.
+              Born and Raised in South Africa, today i live in Stellenbosch, Capetown, South Africa. I brief summary of this webpage.
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-              I have laid out the page to accommodate technical and non-technical "humans". The sidebar will help you navigate. All the best.
+              Each page will have a icon to proceed to the next section if i could say that.
+            </p>
+            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+              Important info is at the bottom of the page. The footer contains links like booking a chat with me via Google Meet, Getting my Resume and navigating to my GitHub.
             </p>
           </section>
         </main>
