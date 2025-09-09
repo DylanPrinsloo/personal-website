@@ -37,6 +37,12 @@ export default function Footer() {
   // Only show booking functionality if we have the required environment variables
   const canShowBooking = calUsername && eventSlug;
 
+  console.log('Environment check:', {
+    calUsername: calUsername,
+    eventSlug: eventSlug,
+    canShowBooking: calUsername && eventSlug
+  });
+
   return (
     <>
       <footer 

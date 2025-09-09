@@ -62,7 +62,7 @@ export default function Aca() {
     : modules.filter(module => module.year === selectedYear);
 
   return (
-    <>
+    <div className="max-w-4xl mx-auto px-4 py-10 md:px-8 w-full pb-32">
       <section id="academics-intro" className="mb-16">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Academics</h2>
         
@@ -188,6 +188,6 @@ export default function Aca() {
           </Link>
         </p>
       </section>
-    </>
+    </div>
   );
 }

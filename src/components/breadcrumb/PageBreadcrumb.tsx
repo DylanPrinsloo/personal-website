@@ -14,22 +14,26 @@ export function PageBreadcrumb() {
   const pathname = usePathname();
 
   const getBreadcrumbs = () => {
-    const cleanPath = pathname.replace('/personal-website', '');
-    
+    // Only remove basePath in production
+    const cleanPath =
+      process.env.NODE_ENV === "production"
+        ? pathname.replace("/personal-website", "")
+        : pathname;
+
     switch (cleanPath) {
       case "/":
       case "":
-        return null; 
+        return null;
 
       case "/pages/academics":
-      case "/pages/academics/": 
+      case "/pages/academics/":
         return [
           { label: "Home", href: "/" },
           { label: "Academics", isCurrentPage: true },
         ];
 
       case "/pages/hackathons":
-      case "/pages/hackathons/": 
+      case "/pages/hackathons/":
         return [
           { label: "Home", href: "/" },
           { label: "Academics", href: "/pages/academics" },
@@ -37,13 +41,13 @@ export function PageBreadcrumb() {
         ];
 
       default:
+        // For unknown routes, still show home breadcrumb
         return [{ label: "Home", href: "/" }];
     }
   };
 
   const breadcrumbItems = getBreadcrumbs();
 
-  // Don't render if no breadcrumbs
   if (!breadcrumbItems) {
     return null;
   }
