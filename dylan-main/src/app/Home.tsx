@@ -2,6 +2,7 @@
 
 import Footer from "@/components/footer/Footer";
 import { PageBreadcrumb } from "@/components/breadcrumb/PageBreadcrumb";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -38,6 +39,22 @@ export default function Home() {
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
               Important info is at the bottom of the page. The footer contains links like booking a chat with me via Google Meet, Getting my Resume and navigating to my GitHub.
+            </p>
+            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4 font-mono">
+              Click here to move to{" "}
+              <Link 
+                href="/pages/academics" 
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline underline-offset-4 transition-colors font-medium"
+              >
+                Academics
+              </Link>
+              {" "}or{" "}
+              <Link 
+                href="/pages/hackathons" 
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline underline-offset-4 transition-colors font-medium"
+              >
+                Hackathons
+              </Link>
             </p>
           </section>
         </main>
