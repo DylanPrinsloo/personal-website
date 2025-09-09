@@ -41,6 +41,13 @@ jobs:
           NEXT_PUBLIC_CAL_EVENT_SLUG: ${{ secrets.NEXT_PUBLIC_CAL_EVENT_SLUG }}
         run: npm run build
         
+      - name: Debug - List files
+        run: |
+          echo "Contents of current directory:"
+          ls -la
+          echo "Contents of out directory (if exists):"
+          ls -la out/ || echo "out directory does not exist"
+          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
