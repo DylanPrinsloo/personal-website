@@ -38,7 +38,7 @@ export default function Home() {
               Each page will have a icon to proceed to the next section if i could say that.
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-              Important info is at the bottom of the page. The footer contains links like booking a chat with me via Google Meet, Getting my Resume and navigating to my GitHub.
+              Important info is at the bottom of the page. The footer contains links like booking a chat with me via Google Meet, Getting my Resume is the orange icon below and navigating to code by my GitHub.
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4 font-mono">
               Click here to move to{" "}

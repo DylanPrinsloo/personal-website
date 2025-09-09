@@ -99,12 +99,12 @@ export default function Footer() {
                 <TooltipTrigger asChild>
                   <Link 
                     href="/static/_Dylan_s_Résumé_2025.pdf" 
-                    className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                    className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
                     download
                   >
-                    <FileDown className="h-4 w-4" />
+                    <FileDown className="h-4 w-4" style={{ color: '#f60' }} />
                     <span className="sr-only">Download Resume</span>
                   </Link>
                 </TooltipTrigger>
