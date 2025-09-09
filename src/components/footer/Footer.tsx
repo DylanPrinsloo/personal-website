@@ -16,8 +16,10 @@ export default function Footer() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const calUsername = process.env.NEXT_PUBLIC_CAL_USERNAME;
-  const eventSlug = process.env.NEXT_PUBLIC_CAL_EVENT_SLUG;
+  
+  // Add fallback values for environment variables
+  const calUsername = process.env.NEXT_PUBLIC_CAL_USERNAME || "";
+  const eventSlug = process.env.NEXT_PUBLIC_CAL_EVENT_SLUG || "";
   
   // Add mounted state to prevent hydration mismatch
   useEffect(() => {
@@ -31,6 +33,9 @@ export default function Footer() {
   const handleBookingClick = () => {
     setIsBookingOpen(true);
   };
+
+  // Only show booking functionality if we have the required environment variables
+  const canShowBooking = calUsername && eventSlug;
 
   return (
     <>
@@ -98,7 +103,7 @@ export default function Footer() {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link 
-                    href="/_Dylan_s_Résumé_2025.pdf" 
+                    href="/Dylan_s_Résumé_2025.pdf" 
                     className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -113,21 +118,24 @@ export default function Footer() {
                 </TooltipContent>
               </Tooltip>
 
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button
-                    onClick={handleBookingClick}
-                    className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-                    aria-label="Book a chat"
-                  >
-                    <Calendar className="h-4 w-4" />
-                    <span className="sr-only">Book a chat</span>
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent className="font-mono">
-                  <p>Book a chat with me</p>
-                </TooltipContent>
-              </Tooltip>
+              {/* Only show booking button if environment variables are available */}
+              {canShowBooking && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={handleBookingClick}
+                      className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                      aria-label="Book a chat"
+                    >
+                      <Calendar className="h-4 w-4" />
+                      <span className="sr-only">Book a chat</span>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent className="font-mono">
+                    <p>Book a chat with me</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
 
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -157,14 +165,16 @@ export default function Footer() {
         </div>
       </footer>
 
-      {/* Booking Dialog */}
-      <BookingDialog
-        open={isBookingOpen}
-        onOpenChange={setIsBookingOpen}
-        calUsername={calUsername}
-        eventSlug={eventSlug}
-        dialogTitle="Book a Chat with Dylan"
-      />
+      {/* Only render BookingDialog if we have the required environment variables */}
+      {canShowBooking && (
+        <BookingDialog
+          open={isBookingOpen}
+          onOpenChange={setIsBookingOpen}
+          calUsername={calUsername}
+          eventSlug={eventSlug}
+          dialogTitle="Book a Chat with Dylan"
+        />
+      )}
     </>
   );
 }
