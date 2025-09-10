@@ -34,14 +34,14 @@ export default function Home() {
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">About me</h2>
             
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-              Born and Raised in South Africa, today I live in Stellenbosch, Capetown. I will give a brief summary of this webpage.
+              Born and raised in South Africa, I currently live in Stellenbosch, Cape Town. Let me give you a brief overview of this website.
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-              Each page will have a icon to proceed to the next section and this is located at the bottom the page.
+              Each page includes navigation links to help you proceed to the next section, located at the bottom of the page.
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-              Important info is at the Footer/bottom of the page. The footer contains links like booking a chat with me via Google Meet, 
-              Getting my Resume is the highlighted in orange below and navigating any code from me via GitHub.
+              You'll find important information in the footer at the bottom of the page, including links to book a chat with me via Google Meet, 
+              download my resume (highlighted in orange below), and explore my code on GitHub.
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4 font-mono">
               Click here to move to{" "}
