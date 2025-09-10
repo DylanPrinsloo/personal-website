@@ -61,28 +61,28 @@ export function BookingDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent 
         className={cn(
-          // Base sizing
           "sm:max-w-[600px] md:max-w-[700px] lg:max-w-[1300px]",
-          "max-h-[90vh] overflow-y-auto",
-          // Visual styling - transparent with blur
-          "bg-transparent backdrop-blur-xl",
-          "border-none shadow-none",
+          "max-h-[90vh] overflow-hidden", 
+          "bg-background border border-border",
+          "shadow-2xl", 
           "p-0",
-          // Always visible - no opacity transitions
+          "rounded-xl",
           "transition-transform duration-300",
-          // JetBrains Mono font
           "font-mono"
         )}
+        style={{
+          // cal.com import has a css issue with custom dialog --> (Use astro)
+          backgroundColor: 'hsl(var(--background))', 
+          borderColor: 'hsl(var(--border))',
+        }}
       >
-        {/* Add accessible DialogTitle that's visually hidden */}
         <DialogTitle className="sr-only font-mono">
           {dialogTitle}
         </DialogTitle>
 
-        <div className="h-[80vh] relative font-mono">
-          {/* Enhanced Loading overlay with Skeleton */}
+        <div className="h-[80vh] relative font-mono bg-background rounded-xl overflow-hidden">
           {iframeLoading && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/95 backdrop-blur-sm gap-6 z-10 rounded-xl p-8 font-mono">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-background backdrop-blur-sm gap-6 z-10 rounded-xl p-8 font-mono">
               
               {/* Calendar skeleton mockup */}
               <div className="w-full max-w-md space-y-4">
@@ -143,9 +143,10 @@ export function BookingDialog({
             width="100%"
             height="100%"
             frameBorder="0"
+            className="rounded-xl" 
             style={{ 
               borderRadius: '12px',
-              backgroundColor: 'transparent',
+              backgroundColor: 'hsl(var(--background))',
               fontFamily: "'JetBrains Mono', 'Courier New', monospace"
             }}
             onLoad={handleIframeLoad}

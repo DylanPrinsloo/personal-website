@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 
 export default function Footer() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme(); 
   const [mounted, setMounted] = useState(false);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   
@@ -26,22 +26,22 @@ export default function Footer() {
     setMounted(true);
   }, []);
   
+  // Use resolvedTheme for more reliable toggling
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
   const handleBookingClick = () => {
     setIsBookingOpen(true);
   };
 
-  // Only show booking functionality if we have the required environment variables
   const canShowBooking = calUsername && eventSlug;
 
-  console.log('Environment check:', {
-    calUsername: calUsername,
-    eventSlug: eventSlug,
-    canShowBooking: calUsername && eventSlug
-  });
+  // console.log('Environment check:', {
+  //   calUsername: calUsername,
+  //   eventSlug: eventSlug,
+  //   canShowBooking: calUsername && eventSlug
+  // });
 
   return (
     <>
@@ -124,7 +124,6 @@ export default function Footer() {
                 </TooltipContent>
               </Tooltip>
 
-              {/* Only show booking button if environment variables are available */}
               {canShowBooking && (
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -151,7 +150,7 @@ export default function Footer() {
                     aria-label="Toggle theme"
                   >
                     {mounted ? (
-                      theme === "dark" ? (
+                      resolvedTheme === "dark" ? ( // Use resolvedTheme instead of theme
                         <Sun className="h-4 w-4" />
                       ) : (
                         <Moon className="h-4 w-4" />
@@ -163,7 +162,7 @@ export default function Footer() {
                   </button>
                 </TooltipTrigger>
                 <TooltipContent className="font-mono">
-                  <p>Toggle {theme === "dark" ? "light" : "dark"} theme</p>
+                  <p>Toggle {resolvedTheme === "dark" ? "light" : "dark"} theme</p> {/* Use resolvedTheme */}
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -171,7 +170,6 @@ export default function Footer() {
         </div>
       </footer>
 
-      {/* Only render BookingDialog if we have the required environment variables */}
       {canShowBooking && (
         <BookingDialog
           open={isBookingOpen}
