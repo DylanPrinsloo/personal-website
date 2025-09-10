@@ -14,14 +14,8 @@ export function PageBreadcrumb() {
   const pathname = usePathname();
 
   const getBreadcrumbs = () => {
-    const cleanPath =
-      process.env.NODE_ENV === "production"
-        ? pathname.replace("/personal-website", "")
-        : pathname;
-
-    switch (cleanPath) {
+    switch (pathname) {
       case "/":
-      case "":
         return null;
 
       case "/pages/academics":

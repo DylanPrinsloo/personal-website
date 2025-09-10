@@ -20,14 +20,10 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
               <div className="overflow-hidden group">
-                <Image 
-                  src="/self-portrait.jpg" 
+                <img 
+                  src="/self-portrait.JPG" 
                   alt="Dylan Prinsloo" 
-                  width={400}
-                  height={300}
                   className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
-                  priority
-                  unoptimized 
                 />
               </div>
             </div>
