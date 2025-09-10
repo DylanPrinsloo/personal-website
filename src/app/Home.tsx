@@ -4,6 +4,7 @@ import Footer from "@/components/footer/Footer";
 import { PageBreadcrumb } from "@/components/breadcrumb/PageBreadcrumb";
 import Link from "next/link";
 import Image from "next/image"; 
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function Home() {
   return (
